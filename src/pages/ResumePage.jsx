@@ -5,7 +5,7 @@ const ResumePage = () => {
   const [content, setContent] = useState("");
 
   useEffect(() => {
-    fetch("/resume.md")
+    fetch(`${import.meta.env.BASE_URL}resume.md`)
       .then((res) => res.text())
       .then((text) => setContent(text));
   }, []);
@@ -33,7 +33,7 @@ const ResumePage = () => {
         <div className="flex flex-col items-center md:items-start gap-4 text-sm text-center md:text-left">
           {/* 头像 */}
           <img
-            src="/head_resume.png"
+            src={`${import.meta.env.BASE_URL}head_resume.png`}
             alt="Max Zhang"
             className="rounded-full w-full max-w-[300px] object-cover shadow-lg"
           />

@@ -6,7 +6,7 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "deploy": "gh-pages -d dist"
+    "deploy": "gh-pages -d dist -b gh-pages -r https://github.com/maxzhangg/portfolio.git"
   },
   "dependencies": {
     "@tailwindcss/typography": "^0.5.16",
