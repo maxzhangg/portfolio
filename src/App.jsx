@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { HashRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import ResumePage from "./pages/ResumePage";
 import Web3Page from "./pages/Web3Page";
 import PhotographerPage from "./pages/PhotographerPage";
@@ -10,13 +10,15 @@ const App = () => {
     <Router>
       <Navbar />
       <Routes>
-        <Route path="/portfolio/resume" element={<ResumePage />} />
-        <Route path="/portfolio/web3" element={<Web3Page />} />
-        <Route path="/portfolio/photographer" element={<PhotographerPage />} />
-        <Route path="*" element={<Navigate to="/portfolio/resume" />} />
+        <Route path="/resume" element={<ResumePage />} />
+        <Route path="/web3" element={<Web3Page />} />
+        <Route path="/photographer" element={<PhotographerPage />} />
+        {/* 默认跳转到 /resume */}
+        <Route path="*" element={<Navigate to="/resume" />} />
       </Routes>
     </Router>
   );
 };
 
 export default App;
+

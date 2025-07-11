@@ -18,29 +18,78 @@ Northeast Electric Power University, 2019–2023 | GPA: 87.2/100
 
 ## Experience
 
-**Service Router Test Platform Dev Student**, Nokia (Apr 2024 – Dec 2024)  
-- Developed 3 test cases, ran 1,078 regression tests  
-- Reported 7 critical bugs, verified 8 fixes  
-- Used CI/CD pipelines, optimized GASH test code
+**Service Router Test Platform Dev Student**, Nokia, Ottawa  
+*Apr 2024 – Dec 2024*
+
+- Collaborated with Ethernet and Optical teams to validate hardware/software in a Linux-based regression testbed.
+- Developed and executed 3 Optical Transceiver test cases; ran 1,078 regression tests on QSFP28 100G modules.
+- Reported 7 critical embedded software bugs; verified 8 fixes across 3 image builds.
+- Enhanced GASH test scripts by debugging and refactoring code, improving automation efficiency.
+- Utilized CI/CD pipelines for test automation, contributing to continuous integration workflow.
 
 ---
 
 ## Technical Skills
 
-**Languages:** Python, SQL, TCL, Java, MATLAB, BASH, Git  
-**Tools:** Linux, Appium, Selenium, Pytest, Solidworks, Simulink  
-**Domains:** Optical Networks, 5G, TCP/IP  
-**Soft Skills:** Problem-solving, troubleshooting, adaptability
+**Programming & Scripting:** Python, TCL, BASH, Java, SQL, MATLAB  
+**Frameworks & Tools:** React, Vite, Pytest, JUnit, Selenium, Appium, Git, Linux, Agile  
+**Networking & Systems:** Optical Networks, Ethernet, 5G, TCP/IP, Ixia Traffic Generator  
+**ML & Data Science:** Scikit-learn, XGBoost, Keras, Pandas, NumPy, Matplotlib  
+**Software:** SolidWorks, Simulink, CAD, Proteus, Matpower  
+**Lab Equipment:** Oscilloscopes, Spectrum Analyzers, Function Generators, Multimeters  
+**Soft Skills:** Problem-solving, Trouble-shooting, Adaptability
+
 
 ---
 
 ## Projects
 
-**Automated Test Generation (2025.04)**  
-- Used Gen-AI to create Pytest cases for sorting algorithms
+### [Tarot Drawing Website with AI Reading](https://maxzhangg.github.io/tarot/)  
+**Date:** 2025.07  
+**Description:** *Developed an interactive Tarot reading website using React and GPT-powered chatbot.*  
+**Key Contributions:**  
+- Used **React** and **Tailwind CSS** to build responsive mobile and desktop layouts with dynamic tarot card drawing.  
+- Integrated **DeepSeek API** to enable multi-turn tarot interpretation chats with Markdown rendering support.  
+- Implemented deterministic card drawing using **SHA-256 hashing** to ensure reproducibility and fairness.  
+- Created a structured **JSON** dataset of 156 tarot cards (upright and reversed meanings) for consistent card logic.  
+- Deployed via GitHub Pages and configured routing using **React HashRouter** to ensure compatibility with static hosting.  
 
-**Movie Recommendation Chatbot (2025.03–)**  
-- Built with SpaCy, Surprise, Google Dialogflow
+---
 
-**Solar Street Light Controller (2023.03–06)**  
-- Designed PWM charging, implemented protection features
+### [Style Max - Fashion Recommendation Platform](https://maxzhangg.github.io/Style-Max-Demo/)  
+**Date:** 2025.05 – 2025.07  
+**Description:** *Developed as a prototype for the GNG5120 course, Style Max is an AI-powered fashion recommendation platform featuring multi-page interaction and chatbot integration.*  
+**Key Contributions:**  
+- Designed a multi-page React application with routes for [**Home**](https://maxzhangg.github.io/Style-Max-Demo/), [**Chat**](https://maxzhangg.github.io/Style-Max-Demo/#/chat), [**Community**](https://maxzhangg.github.io/Style-Max-Demo/#/community), [**Wardrobe**](https://maxzhangg.github.io/Style-Max-Demo/#/wardrobe), and a [**Uniqlo shopping assistant**](https://maxzhangg.github.io/Style-Max-Demo/#/uniqlo).  
+- Integrated **DeepSeek API** to power conversational recommendations with Markdown support, multi-turn memory, and real-time streaming.  
+- Built custom **chat widget components** to enable consistent AI interactions across pages, including integration with static SingleFile-based HTML content (Uniqlo).  
+- Created **desktop-responsive layouts** with Tailwind CSS, unifying UI/UX.  
+- Implemented dynamic routing with **HashRouter** and configured **multi-entry Vite builds** for proper static deployment on GitHub Pages.  
+
+---
+
+### Automated Test Generation with Gen-AI under Pytest  
+**Date:** 2025.04  
+**Description:** *Generated Pytest test cases for Python programs using gen-ai.*  
+**Key Contributions:**  
+- Provided a full suite of **Pytest** test cases for classic sorting algorithms.  
+- Tests were automatically generated and manually evaluated to ensure correctness, structural coverage, and robustness.
+
+---
+
+### Movie Recommendation System
+**Date:** 2025.03 – 2025.04 
+**Description:** *Developed a chatbot to recommend movies.*  
+**Key Contributions:**  
+- Used **SpaCy** library for information and named entity extraction.
+- Built recommendation system using the **Surprise** library in Python.
+- Developed interactive chatbot with **Google Dialogflow**.
+
+---
+
+### MCU-Based Solar Street Light Controller Design
+**Description:** **Date:** 2023.03 – 2023.06  
+*Developed a solar-powered LED street lighting system based on **ATmega8 MCU**.*  
+**Key Contributions:**  
+- Designed **DC-DC circuit** using **pulse width modulation** for optimized solar charging.
+- Implemented protection features such as **short circuit, overload, and automatic recovery mechanisms**.

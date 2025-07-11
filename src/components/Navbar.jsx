@@ -14,13 +14,13 @@ const Navbar = () => {
   return (
     <nav className="w-full flex justify-end items-center p-4 border-b shadow-sm bg-white">
       <div className="flex space-x-4">
-        <Link to="/portfolio/resume" className={linkClass("/portfolio/resume")}>
+        <Link to="/resume" className={linkClass("/resume")}>
           Resume
         </Link>
-        <Link to="/portfolio/web3" className={linkClass("/portfolio/web3")}>
+        <Link to="/web3" className={linkClass("/web3")}>
           Web3
         </Link>
-        <Link to="/portfolio/photographer" className={linkClass("/portfolio/photographer")}>
+        <Link to="/photographer" className={linkClass("/photographer")}>
           Photographer
         </Link>
       </div>

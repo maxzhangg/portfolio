@@ -15,15 +15,35 @@ const ResumePage = () => {
   const mainInfo = sections[0] || "";
   const projects = sections[1] ? "## Projects" + sections[1] : "";
 
-  // 自定义 Markdown 标题样式
+  // 自定义 Markdown 标题样式（美化版）
   const markdownComponents = {
     h2: ({ node, ...props }) => (
-      <h2 className="text-xl font-bold text-gray-800 mt-6 mb-2" {...props} />
+      <h2
+        className="text-2xl font-extrabold text-gray-900 mt-8 mb-4 border-b-2 border-gray-200 pb-1 tracking-wide"
+        {...props}
+      />
     ),
     h3: ({ node, ...props }) => (
-      <h3 className="text-lg font-semibold text-gray-700 mt-4 mb-1" {...props} />
+      <h3
+        className="text-xl font-semibold text-gray-800 mt-6 mb-2 tracking-tight"
+        {...props}
+      />
+    ),
+    h4: ({ node, ...props }) => (
+      <h4
+        className="text-lg font-medium text-gray-700 mt-4 mb-1"
+        {...props}
+      />
+    ),
+    a: ({ node, ...props }) => (
+      <a
+        className="text underline hover:text-blue-800 transition-colors duration-150"
+        {...props}
+      />
     ),
   };
+
+
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-12 gap-6 max-w-[1800px] mx-auto px-8 pt-20 pb-8">
