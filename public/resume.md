@@ -46,7 +46,7 @@ Northeast Electric Power University, 2019–2023 | GPA: 87.2/100
 
 ### [Tarot Drawing Website with AI Reading](https://maxzhangg.github.io/tarot/)  
 **Date:** 2025.07  
-**Description:** *Developed an interactive Tarot reading website using React and GPT-powered chatbot.*  
+**Description:** Developed an interactive Tarot drawing and reading website using React and AI-powered chatbot.  
 **Key Contributions:**  
 - Used **React** and **Tailwind CSS** to build responsive mobile and desktop layouts with dynamic tarot card drawing.  
 - Integrated **DeepSeek API** to enable multi-turn tarot interpretation chats with Markdown rendering support.  
@@ -58,7 +58,7 @@ Northeast Electric Power University, 2019–2023 | GPA: 87.2/100
 
 ### [Style Max - Fashion Recommendation Platform](https://maxzhangg.github.io/Style-Max-Demo/)  
 **Date:** 2025.05 – 2025.07  
-**Description:** *Developed as a prototype for the GNG5120 course, Style Max is an AI-powered fashion recommendation platform featuring multi-page interaction and chatbot integration.*  
+**Description:** Developed as a prototype for the GNG5120 course, Style Max is an AI-powered fashion recommendation platform featuring multi-page interaction and chatbot integration.  
 **Key Contributions:**  
 - Designed a multi-page React application with routes for [**Home**](https://maxzhangg.github.io/Style-Max-Demo/), [**Chat**](https://maxzhangg.github.io/Style-Max-Demo/#/chat), [**Community**](https://maxzhangg.github.io/Style-Max-Demo/#/community), [**Wardrobe**](https://maxzhangg.github.io/Style-Max-Demo/#/wardrobe), and a [**Uniqlo shopping assistant**](https://maxzhangg.github.io/Style-Max-Demo/#/uniqlo).  
 - Integrated **DeepSeek API** to power conversational recommendations with Markdown support, multi-turn memory, and real-time streaming.  
@@ -68,9 +68,9 @@ Northeast Electric Power University, 2019–2023 | GPA: 87.2/100
 
 ---
 
-### Automated Test Generation with Gen-AI under Pytest  
+### [Automated Test Generation with Gen-AI under Pytest](https://github.com/maxzhangg/ai-generated-pytest-for-sorting)  
 **Date:** 2025.04  
-**Description:** *Generated Pytest test cases for Python programs using gen-ai.*  
+**Description:** Generated Pytest test cases for Python programs using gen-ai.  
 **Key Contributions:**  
 - Provided a full suite of **Pytest** test cases for classic sorting algorithms.  
 - Tests were automatically generated and manually evaluated to ensure correctness, structural coverage, and robustness.
@@ -79,7 +79,7 @@ Northeast Electric Power University, 2019–2023 | GPA: 87.2/100
 
 ### Movie Recommendation System
 **Date:** 2025.03 – 2025.04 
-**Description:** *Developed a chatbot to recommend movies.*  
+**Description:** Developed a chatbot to recommend movies.  
 **Key Contributions:**  
 - Used **SpaCy** library for information and named entity extraction.
 - Built recommendation system using the **Surprise** library in Python.
@@ -88,8 +88,8 @@ Northeast Electric Power University, 2019–2023 | GPA: 87.2/100
 ---
 
 ### MCU-Based Solar Street Light Controller Design
-**Description:** **Date:** 2023.03 – 2023.06  
-*Developed a solar-powered LED street lighting system based on **ATmega8 MCU**.*  
+**Date:** 2023.03 – 2023.06  
+**Description:**Developed a solar-powered LED street lighting system based on ATmega8 MCU.  
 **Key Contributions:**  
 - Designed **DC-DC circuit** using **pulse width modulation** for optimized solar charging.
 - Implemented protection features such as **short circuit, overload, and automatic recovery mechanisms**.

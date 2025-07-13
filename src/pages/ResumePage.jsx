@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 const ResumePage = () => {
   const [content, setContent] = useState("");
@@ -13,9 +14,9 @@ const ResumePage = () => {
   // 拆分简历内容：正文 + 项目
   const sections = content.split("## Projects");
   const mainInfo = sections[0] || "";
-  const projects = sections[1] ? "## Projects" + sections[1] : "";
+  const projects = sections[1] || "";
 
-  // 自定义 Markdown 标题样式（美化版）
+  // 自定义 Markdown 渲染样式
   const markdownComponents = {
     h2: ({ node, ...props }) => (
       <h2
@@ -43,33 +44,91 @@ const ResumePage = () => {
     ),
   };
 
+  const [projectList, setProjectList] = useState([]);
+  const [expandedAll, setExpandedAll] = useState(false);
 
+  useEffect(() => {
+    if (projects) {
+      const rawItems = projects
+        .split(/^### /gm)
+        .filter((block) => block.trim());
+
+      const parsedProjects = rawItems.map((block, index) => {
+        const lines = block.trim().split("\n");
+        const titleLine = lines[0];
+        const titleMatch = titleLine.match(/\[([^\]]+)\]\(([^)]+)\)/);
+        const title = titleMatch ? titleMatch[1] : titleLine.trim();
+        const link = titleMatch ? titleMatch[2] : "#";
+
+        const dateLine = lines.find((l) =>
+          l.toLowerCase().startsWith("**date:**")
+        );
+        const descriptionLine = lines.find((l) =>
+          l.toLowerCase().startsWith("**description:**")
+        );
+
+        const date = dateLine
+          ? dateLine.replace(/\*\*Date:\*\*\s*/, "").trim()
+          : "";
+        const description = descriptionLine
+          ? descriptionLine.replace(/\*\*Description:\*\*\s*/, "").trim()
+          : "";
+
+        const contribIndex = lines.findIndex((l) =>
+          l.toLowerCase().startsWith("**key contributions:**")
+        );
+
+        let contributions = "";
+        if (contribIndex !== -1) {
+          contributions = lines.slice(contribIndex + 1).join("\n").trim();
+        }
+
+        return {
+          id: index,
+          title,
+          link,
+          date,
+          description,
+          contributions,
+          expanded: false,
+        };
+      });
+
+      setProjectList(parsedProjects);
+    }
+  }, [projects]);
+
+  const toggleExpand = (id) => {
+    setProjectList((prev) =>
+      prev.map((p) =>
+        p.id === id ? { ...p, expanded: !p.expanded } : p
+      )
+    );
+  };
+
+  const toggleAll = () => {
+    const shouldExpand = !expandedAll;
+    setProjectList((prev) =>
+      prev.map((p) => ({ ...p, expanded: shouldExpand }))
+    );
+    setExpandedAll(shouldExpand);
+  };
 
   return (
     <div className="transform scale-90 origin-top grid grid-cols-1 md:grid-cols-12 gap-6 max-w-[1800px] mx-auto px-8 pt-10 pb-8">
-      {/* 左栏：头像 + 个人信息 */}
+      {/* 左栏 */}
       <div className="md:col-span-3 flex justify-center md:block border-r border-gray-300 pr-4 mt-20">
-
-        
-
         <div className="flex flex-col items-center md:items-start gap-4 text-sm text-center md:text-left">
-          {/* 头像 */}
           <img
             src={`${import.meta.env.BASE_URL}head_resume.png`}
             alt="Max Zhang"
             className="rounded-full w-full max-w-[300px] object-cover shadow-lg"
           />
-
-          {/* 姓名 + 代词 */}
           <div className="text-xl font-semibold mt-2">Max Zhang</div>
           <div className="text-gray-600">she/her</div>
-
-          {/* 简介 */}
           <div className="text-sm text-gray-700 italic">
             Electrical & Computer Engineering
           </div>
-
-          {/* 联系方式 */}
           <div className="space-y-1 mt-4 text-left w-full">
             <div className="flex items-center gap-2">
               <span role="img" aria-label="email">📧</span>
@@ -85,14 +144,54 @@ const ResumePage = () => {
         </div>
       </div>
 
-      {/* 中栏：简历正文 */}
+      {/* 中栏 */}
       <div className="md:col-span-5 text-base leading-snug space-y-2">
         <ReactMarkdown components={markdownComponents}>{mainInfo}</ReactMarkdown>
       </div>
 
-      {/* 右栏：项目部分 */}
-      <div className="md:col-span-4 text-base leading-snug space-y-2 border-l border-gray-300 pl-4 max-h-[90vh] overflow-y-auto">
-        <ReactMarkdown components={markdownComponents}>{projects}</ReactMarkdown>
+      {/* 右栏：项目列表 */}
+      <div className="md:col-span-4 text-base leading-snug space-y-4 border-l border-gray-300 pl-4 max-h-[90vh] overflow-y-auto">
+        <div className="flex justify-between items-center">
+          <h2 className="text-xl font-bold">Projects</h2>
+          <button
+            onClick={toggleAll}
+            className="text-sm text-blue-600 hover:underline"
+          >
+            {expandedAll ? "hide all" : "show all"}
+          </button>
+        </div>
+
+        {projectList.map((proj) => (
+          <div
+            key={proj.id}
+            className="border border-gray-200 rounded-md p-3 shadow-sm hover:shadow-md transition cursor-pointer"
+            onClick={() => toggleExpand(proj.id)}
+          >
+            {proj.link !== "#" ? (
+              <a
+                href={proj.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-800 underline hover:text-blue-700"
+              >
+                <h3 className="text-lg font-semibold">{proj.title}</h3>
+              </a>
+            ) : (
+              <h3 className="text-lg font-semibold text-gray-800">{proj.title}</h3>
+            )}
+
+            <p className="text-sm text-gray-500 mb-1">{proj.date}</p>
+            <p className="mb-2">{proj.description}</p>
+
+            {proj.expanded && (
+              <div className="mt-2 border-t pt-2 text-sm text-gray-700">
+                <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                  {proj.contributions}
+                </ReactMarkdown>
+              </div>
+            )}
+          </div>
+        ))}
       </div>
     </div>
   );
