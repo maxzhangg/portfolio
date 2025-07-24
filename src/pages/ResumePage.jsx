@@ -115,7 +115,7 @@ const ResumePage = () => {
   };
 
   return (
-    <div className="transform scale-90 origin-top grid grid-cols-1 md:grid-cols-12 gap-6 max-w-[1800px] mx-auto px-8 pt-10 pb-8">
+    <div className="transform scale-90 origin-top grid grid-cols-1 md:grid-cols-12 gap-6 max-w-[1800px] mx-auto px-8 pt-20 pb-8">
       {/* 左栏 */}
       <div className="md:col-span-3 flex justify-center md:block border-r border-gray-300 pr-4 mt-20">
         <div className="flex flex-col items-center md:items-start gap-4 text-sm text-center md:text-left">

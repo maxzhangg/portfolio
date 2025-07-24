@@ -3,22 +3,23 @@ import { HashRouter as Router, Routes, Route, Navigate } from "react-router-dom"
 import ResumePage from "./pages/ResumePage";
 import Web3Page from "./pages/Web3Page";
 import PhotographerPage from "./pages/PhotographerPage";
-import Navbar from "./components/Navbar";
+import HomePage from "./pages/HomePage";
 
 const App = () => {
   return (
     <Router>
-      <Navbar />
-      <Routes>
-        <Route path="/resume" element={<ResumePage />} />
-        <Route path="/web3" element={<Web3Page />} />
-        <Route path="/photographer" element={<PhotographerPage />} />
-        {/* 默认跳转到 /resume */}
-        <Route path="*" element={<Navigate to="/resume" />} />
-      </Routes>
+      <div className="min-h-screen bg-white p-4">
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/resume" element={<ResumePage />} />
+          <Route path="/web3" element={<Web3Page />} />
+          <Route path="/photographer" element={<PhotographerPage />} />
+          {/* 其他路径都跳转到主页 */}
+          <Route path="*" element={<Navigate to="/" />} />
+        </Routes>
+      </div>
     </Router>
   );
 };
 
 export default App;
-
