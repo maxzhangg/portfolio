@@ -1,10 +1,178 @@
-import React from "react";
+import React, { useState } from "react";
+
+const TABS = ["Photo", "Gallery", "About"];
 
 const PhotographerPage = () => {
+  const [tab, setTab] = useState("Photo");
+  const [subTab, setSubTab] = useState("Models"); // Gallery 默认子分类
+
+  // 精选图片数组（12张）
+  const featuredImages = Array.from({ length: 12 }, (_, i) => 
+    `/photo/featured/${i + 1}.jpg`
+  );
+
   return (
-    <div className="p-8">
-      <h1 className="text-2xl font-bold">Photographer Page</h1>
-      <p>This is a placeholder for photography content.</p>
+    <div className="min-h-screen bg-white text-gray-800 pb-16">
+      {/* 顶部导航栏 */}
+      <nav className="sticky top-0 z-50 bg-white border-b shadow-sm">
+        <div className="max-w-5xl mx-auto flex justify-between items-center px-4 py-2">
+          <div className="font-bold text-lg">Max Photography</div>
+          <div className="space-x-4">
+            {TABS.map((t) => (
+              <button
+                key={t}
+                className={`px-3 py-1 rounded ${
+                  tab === t
+                    ? "bg-black text-white"
+                    : "text-gray-600 hover:underline"
+                }`}
+                onClick={() => setTab(t)}
+              >
+                {t}
+              </button>
+            ))}
+          </div>
+        </div>
+      </nav>
+
+      {/* 页面内容 */}
+      <div className="max-w-5xl mx-auto p-4">
+        {/* --- Photo Tab --- */}
+        {tab === "Photo" && (
+  <div className="space-y-8">
+    <section className="text-center mt-8">
+      <h1 className="text-4xl font-bold text-gray-900">Max Zhang</h1>
+      <p className="text-gray-600 mt-2 text-lg">
+        Not just portraits—fragments of intimacy, tension, and truth.
+      </p>
+    </section>
+
+    <section>
+      <h2 className="text-2xl font-semibold mb-4">Featured</h2>
+
+      <div className="columns-1 sm:columns-2 lg:columns-3 gap-4 space-y-4">
+        {[
+          "20240802_2.png",
+          "20240817_llj_1.png",
+          "20240904_zpf_1.png",
+          "20240904_zpf_3.png",
+          "Alex_1_7.jpg",
+          "Alex_1_8.jpg",
+          "Alex_2_4.jpg",
+          "Alex_3_3.jpg",
+          "20241208_fy_1.png",
+          "20241208_fy_2.jpg",
+          "20241208_fy_4.png"
+        ].map((filename, i) => (
+          <img
+            key={i}
+            src={`/photo/featured/${filename}`}
+            alt={`精选 ${i + 1}`}
+            className="w-full rounded-lg break-inside-avoid"
+          />
+        ))}
+      </div>
+    </section>
+  </div>
+)}
+
+        {/* --- Gallery Tab --- */}
+        {tab === "Gallery" && (
+  <div className="space-y-8 mt-6">
+    <h2 className="text-2xl font-bold text-center">Max Photography</h2>
+
+    {/* 子分类导航条 */}
+    <div className="flex justify-center gap-4 mt-4">
+      {["Models", "Girls", "Sapphic"].map((label) => (
+        <button
+          key={label}
+          onClick={() => setSubTab(label)}
+          className={`px-4 py-1 border rounded-full text-sm ${
+            subTab === label
+              ? "bg-black text-white"
+              : "border-gray-300 text-gray-600 hover:bg-gray-100"
+          }`}
+        >
+          {label}
+        </button>
+      ))}
+    </div>
+
+    {/* 展示对应分类照片 */}
+    <div className="mt-6">
+      {subTab === "Models" && (
+        <div className="columns-4 gap-4 space-y-4">
+          {[
+            "Alex_1_1.jpg", "Alex_1_2.jpg", "Alex_1_3.jpg", "Alex_1_4.jpg",
+            "Alex_1_5.jpg", "Alex_1_6.jpg", "Alex_1_7.jpg", "Alex_1_8.jpg",
+            "Alex_2_1.jpg", "Alex_2_2.jpg", "Alex_2_3.jpg", "Alex_2_4.jpg",
+            "Alex_2_5.jpg", "Alex_3_1.jpg", "Alex_3_2.jpg", "Alex_3_3.jpg",
+            "Alex_3_4.jpg", "Alex_3_5.jpg", "Alex_3_6.jpg"
+          ].map((filename, i) => (
+            <img
+              key={i}
+              src={`/photo/model/${filename}`}
+              alt={`模特 ${i + 1}`}
+              className="w-full rounded-lg break-inside-avoid"
+            />
+          ))}
+        </div>
+      )}
+
+      {subTab === "Girls" && (
+  <div className="columns-4 gap-4 space-y-4">
+    {[
+      "20240802_1.png", "20240802_2.png",
+      "20240816_fy_1.jpg", "20240816_fy_2.jpg", "20240816_fy_3.jpg",
+      "20240816_fy_4.jpg", "20240816_fy_5.jpg", "20240816_fy_6.jpg",
+      "20240817_llj_1.png", "20240817_llj_2.png",
+      "20240904_zpf_1.png", "20240904_zpf_2.png", "20240904_zpf_3.png",
+      "20241208_fy_1.png", "20241208_fy_2.jpg", "20241208_fy_3.png",
+      "20241208_fy_4.png", "20241208_fy_5.png", "20241208_fy_6.png",
+      "20241208_fy_7.png", "20241208_fy_8.png"
+    ].map((filename, i) => (
+      <img
+        key={i}
+        src={`/photo/girls/${filename}`}
+        alt={`girl-${i + 1}`}
+        className="w-full rounded-lg break-inside-avoid"
+      />
+    ))}
+  </div>
+)}
+      {subTab === "Sapphic" && (
+        <div className="columns-2 gap-4 space-y-4">
+          {["1.jpg", "2.jpg"].map((filename, i) => (
+            <img
+              key={i}
+              src={`/photo/lesbian/${filename}`}
+              alt={`叙事系 ${i + 1}`}
+              className="w-full rounded-lg break-inside-avoid"
+            />
+          ))}
+        </div>
+      )}
+    </div>
+  </div>
+)}
+
+
+        {/* --- About Tab --- */}
+        {tab === "About" && (
+          <div className="mt-8 space-y-4">
+            <h2 className="text-2xl font-bold">关于我</h2>
+            <p className="text-gray-700 leading-relaxed">
+              我是 Max Zhang，一名热爱影像创作的摄影师。<br />
+              我的作品关注人物与情绪，擅长通过自然光与场景营造氛围。<br />
+              无论是街拍、糖水片，还是叙事性的同性题材，我都在寻找人与人之间的联系与故事。
+            </p>
+            <p className="text-gray-700">
+              📍 拍摄地：加拿大渥太华<br />
+              📧 联系方式：max@example.com（示例）
+            </p>
+          </div>
+        )}
+      </div>
     </div>
   );
 };
