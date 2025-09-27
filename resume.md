@@ -9,7 +9,7 @@
 ## Education
 
 **Master of Engineering, Electrical and Computer Engineering**  
-University of Ottawa, 2023–Present | GPA: 9.125/10
+University of Ottawa, 2023–2025 | GPA: 9.125/10
 
 **Bachelor of Engineering, Electrical Engineering and Automation**  
 Northeast Electric Power University, 2019–2023 | GPA: 87.2/100
