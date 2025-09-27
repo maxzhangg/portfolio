@@ -92,11 +92,7 @@ const PhotographerPage = () => {
               ))}
             </div>
             <div className="mt-6">
-              <div
-                className={`${
-                  subTab === "Sapphic" ? "columns-2" : "columns-4"
-                } gap-4 space-y-4`}
-              >
+              <div className="columns-4 gap-4 space-y-4">
                 {galleryList.map((filename, i) => (
                   <img
                     key={i}
