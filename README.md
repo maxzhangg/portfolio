@@ -34,7 +34,7 @@ Main pages:
    ```bash
    git clone https://github.com/maxzhangg/portfolio.git
    cd portfolio
-````
+   ```
 
 2. Install dependencies:
 
