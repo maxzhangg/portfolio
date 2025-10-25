@@ -21,11 +21,13 @@ Northeast Electric Power University, 2019–2023 | GPA: 87.2/100
 **Service Router Test Platform Dev Student**, Nokia, Ottawa  
 *Apr 2024 – Dec 2024*
 
-- Collaborated with Ethernet and Optical teams to validate hardware/software in a Linux-based regression testbed.
-- Developed and executed 3 Optical Transceiver test cases; ran 1,078 regression tests on QSFP28 100G modules.
-- Reported 7 critical embedded software bugs; verified 8 fixes across 3 image builds.
-- Enhanced GASH test scripts by debugging and refactoring code, improving automation efficiency.
-- Utilized CI/CD pipelines for test automation, contributing to continuous integration workflow.
+- Assist Ethernet and Optical teams to validate new hardware and software in a Linux-based regression environment.
+- Developed and executed **3** test cases for Optical Transceivers and Media Dependent Adapters.
+- Conducted **1,078** regression tests on **QSFP28 - 4x25G/100G PSM4 Optical Transceiver**, ensuring reliability and compliance.
+- Identified and reported **7** critical embedded software bugs, enhancing system stability.
+- Verified **8** bug fixes across 3 embedded software images.
+- Optimized GASH code by fixing bugs and improving functionality, streamlining testing workflows.
+- Worked extensively with CI/CD pipelines for automated testing and deployment.
 
 ---
 
