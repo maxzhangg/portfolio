@@ -46,7 +46,7 @@ Northeast Electric Power University, 2019–2023 | GPA: 87.2/100
 
 ## Projects
 
-### [Relationship K-Line: AI-Powered Astrology Compatibility Visualization](https://github.com/maxzhangg/relationship-k-line)  
+### [Relationship K-Line: AI-Powered Astrology Compatibility Visualization](https://maxzhangg.github.io/relationship-k-line/)  
 **Date:** 2026.01  
 **Description:** Developed a client-side astrology visualization web application that quantifies and visualizes romantic compatibility using BaZi (Four Pillars of Destiny) and generative AI.  
 **Key Contributions:**  
