@@ -75,7 +75,8 @@ Northeast Electric Power University, 2019–2023 | GPA: 87.2/100
 
 ### [Style Max - Fashion Recommendation Platform](https://maxzhangg.github.io/Style-Max-Demo/)  
 **Date:** 2025.05 – 2025.07  
-**Description:** Developed as a prototype for the GNG5120 course, Style Max is an AI-powered fashion recommendation platform featuring multi-page interaction and chatbot integration.  
+**Description:** Developed as a prototype for the GNG5120 course, Style Max is an AI-powered fashion recommendation platform featuring multi-page interaction and chatbot integration. 
+**Images:** projects/style-max/1.png, projects/style-max/2.png, projects/style-max/3.jpeg, projects/style-max/4.png, projects/style-max/5.png,  
 **Key Contributions:**  
 - Designed a multi-page React application with routes for [**Home**](https://maxzhangg.github.io/Style-Max-Demo/), [**Chat**](https://maxzhangg.github.io/Style-Max-Demo/#/chat), [**Community**](https://maxzhangg.github.io/Style-Max-Demo/#/community), [**Wardrobe**](https://maxzhangg.github.io/Style-Max-Demo/#/wardrobe), and a [**Uniqlo shopping assistant**](https://maxzhangg.github.io/Style-Max-Demo/#/uniqlo).  
 - Integrated **DeepSeek API** to power conversational recommendations with Markdown support, multi-turn memory, and real-time streaming.  
