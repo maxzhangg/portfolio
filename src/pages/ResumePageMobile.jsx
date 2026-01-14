@@ -56,6 +56,18 @@ const ResumePage = () => {
         const descriptionLine = lines.find((l) => l.toLowerCase().startsWith("**description:**"));
         const date = dateLine ? dateLine.replace(/\*\*Date:\*\*\s*/, "").trim() : "";
         const description = descriptionLine ? descriptionLine.replace(/\*\*Description:\*\*\s*/, "").trim() : "";
+        const imagesLine = lines.find((l) =>
+          l.toLowerCase().startsWith("**images:**")
+          );
+
+        const images = imagesLine
+          ? imagesLine
+          .replace(/\*\*Images:\*\*\s*/i, "")
+          .split(",")
+          .map((s) => s.trim())
+          .filter(Boolean)
+          : [];
+
         const contribIndex = lines.findIndex((l) => l.toLowerCase().startsWith("**key contributions:**"));
         let contributions = "";
         if (contribIndex !== -1) {
@@ -68,6 +80,7 @@ const ResumePage = () => {
           date,
           description,
           contributions,
+          images,
           expanded: false,
         };
       });
@@ -143,10 +156,40 @@ const ResumePage = () => {
             <p className="text-sm mb-1">{proj.description}</p>
 
             {proj.expanded && (
-              <div className="mt-1 pt-1 border-t text-xs text-gray-700">
-                <ReactMarkdown remarkPlugins={[remarkGfm]}>{proj.contributions}</ReactMarkdown>
-              </div>
-            )}
+  <div className="mt-1 pt-2 border-t text-xs text-gray-700 space-y-3">
+    {/* Contributions 先 */}
+    <ReactMarkdown remarkPlugins={[remarkGfm]}>
+      {proj.contributions}
+    </ReactMarkdown>
+
+    {/* Gallery 最后：竖向满宽展示，不裁切 */}
+    {Array.isArray(proj.images) && proj.images.length > 0 && (
+      <div className="pt-2 border-t space-y-3">
+        {proj.images.map((img, idx) => {
+          const src = `${import.meta.env.BASE_URL}${img}`;
+          return (
+            <a
+              key={`${proj.id}-${idx}`}
+              href={src}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={(e) => e.stopPropagation()}
+              className="block w-full"
+            >
+              <img
+                src={src}
+                alt={`${proj.title} ${idx + 1}`}
+                className="w-full h-auto object-contain rounded-md border bg-white"
+                loading="lazy"
+              />
+            </a>
+          );
+        })}
+      </div>
+    )}
+  </div>
+)}
+
           </div>
         ))}
       </div>

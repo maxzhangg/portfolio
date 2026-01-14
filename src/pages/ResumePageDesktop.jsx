@@ -78,6 +78,18 @@ const ResumePage = () => {
           l.toLowerCase().startsWith("**key contributions:**")
         );
 
+        const imagesLine = lines.find((l) =>
+          l.toLowerCase().startsWith("**images:**")
+          );
+
+        const images = imagesLine
+  ?       imagesLine
+            .replace(/\*\*Images:\*\*\s*/i, "")
+            .split(",")
+            .map((s) => s.trim())
+            .filter(Boolean)
+         : [];
+
         let contributions = "";
         if (contribIndex !== -1) {
           contributions = lines.slice(contribIndex + 1).join("\n").trim();
@@ -90,6 +102,7 @@ const ResumePage = () => {
           date,
           description,
           contributions,
+          images,
           expanded: false,
         };
       });
@@ -182,14 +195,50 @@ const ResumePage = () => {
 
             <p className="text-sm text-gray-500 mb-1">{proj.date}</p>
             <p className="mb-2">{proj.description}</p>
-
+            
             {proj.expanded && (
-              <div className="mt-2 border-t pt-2 text-sm text-gray-700">
-                <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                  {proj.contributions}
-                </ReactMarkdown>
-              </div>
-            )}
+  <div className="mt-2 border-t pt-3 text-sm text-gray-700 space-y-4">
+    {/* Contributions（先） */}
+    <ReactMarkdown remarkPlugins={[remarkGfm]}>
+      {proj.contributions}
+    </ReactMarkdown>
+
+    {/* Gallery（末尾） */}
+    {Array.isArray(proj.images) && proj.images.length > 0 && (
+  <div className="pt-3 border-t space-y-4">
+    {proj.images.map((img, idx) => {
+      const src = `${import.meta.env.BASE_URL}${img}`;
+      return (
+        <a
+          key={`${proj.id}-${idx}`}
+          href={src}
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={(e) => e.stopPropagation()}
+          className="block w-full"
+        >
+          <img
+            src={src}
+            alt={`${proj.title} ${idx + 1}`}
+            className="
+              w-full
+              h-auto
+              object-contain
+              rounded-md
+              border
+              bg-white
+            "
+            loading="lazy"
+          />
+        </a>
+      );
+    })}
+  </div>
+)}
+
+  </div>
+)}
+            
           </div>
         ))}
       </div>
