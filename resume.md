@@ -30,8 +30,7 @@ Northeast Electric Power University, 2019–2023 | GPA: 87.2/100
 
 **Testing Frameworks & Tools:** PyTest, JUnit, Selenium, Appium, ACTS, Z3, METtester, Postman, JIRA
 
-**Networking & Systems:** Optical Networks, Optical Transceivers, Ethernet, TCP/IP, Ixia Traffic Generator,  
-BER Analysis, Link Budget Analysis
+**Networking & Systems:** Optical Networks, Optical Transceivers, Ethernet, TCP/IP, Ixia Traffic Generator, BER Analysis, Link Budget Analysis
 
 **Machine Learning & Data Science:** Scikit-learn, XGBoost, Keras, Pandas, NumPy, Matplotlib
 
