@@ -1,10 +1,4 @@
-## Summary of Qualifications
 
-- Proficient in developing and troubleshooting in fast-paced environments.
-- Experience in software testing/development on networking devices.
-- Skilled in Python, TCL, BASH, Linux for automation and scripting.
-
----
 
 ## Education
 
@@ -30,16 +24,23 @@ Northeast Electric Power University, 2019–2023 | GPA: 87.2/100
 - Worked extensively with CI/CD pipelines for automated testing and deployment.
 
 ---
-
 ## Technical Skills
 
-**Programming & Scripting:** Python, TCL, BASH, Java, SQL, MATLAB  
-**Frameworks & Tools:** React, Vite, Pytest, JUnit, Selenium, Appium, Git, Linux, Agile  
-**Networking & Systems:** Optical Networks, Ethernet, 5G, TCP/IP, Ixia Traffic Generator  
-**ML & Data Science:** Scikit-learn, XGBoost, Keras, Pandas, NumPy, Matplotlib  
-**Software:** SolidWorks, Simulink, CAD, Proteus, Matpower  
-**Lab Equipment:** Oscilloscopes, Spectrum Analyzers, Function Generators, Multimeters  
-**Soft Skills:** Problem-solving, Trouble-shooting, Adaptability
+**Programming & Scripting:** Python, Java, TCL, JavaScript, TypeScript, BASH, SQL, MATLAB
+
+**Testing Frameworks & Tools:** PyTest, JUnit, Selenium, Appium, ACTS, Z3, METtester, Postman, JIRA
+
+**Networking & Systems:** Optical Networks, Optical Transceivers, Ethernet, TCP/IP, Ixia Traffic Generator,  
+BER Analysis, Link Budget Analysis
+
+**Machine Learning & Data Science:** Scikit-learn, XGBoost, Keras, Pandas, NumPy, Matplotlib
+
+**Frontend & Web Development:** React, Vite, Tailwind CSS, Responsive Design, GitHub Pages
+
+**Engineering & Simulation Software:** MATLAB Simulink, SolidWorks, CAD, Proteus, MATPOWER
+
+**Lab Equipment:** BERT, Optical Spectrum Analyzer, Oscilloscope, Function Generator, Multimeter
+
 
 
 ---
@@ -111,3 +112,23 @@ Northeast Electric Power University, 2019–2023 | GPA: 87.2/100
 **Key Contributions:**  
 - Designed **DC-DC circuit** using **pulse width modulation** for optimized solar charging.
 - Implemented protection features such as **short circuit, overload, and automatic recovery mechanisms**.
+
+---
+
+### Harmonic Analysis of Power Systems Using Fourier Transform
+**Date:** 2021.11  
+**Description:** Performed signal-processing-based harmonic analysis for electrical power systems to evaluate power quality and harmonic distortion.  
+**Key Contributions:**  
+- Applied **Fast Fourier Transform (FFT)** to analyze harmonic components in power system signals.  
+- Used **Hanning window** techniques to reduce spectral leakage and improve frequency-domain accuracy.  
+- Evaluated harmonic distortion characteristics to support power quality assessment and system optimization.
+
+---
+
+### Power Flow Calculation for IEEE 57-Bus System
+**Date:** 2021.12  
+**Description:** Conducted steady-state power flow analysis and system stability evaluation for a standard IEEE 57-bus power network.  
+**Key Contributions:**  
+- Analyzed **voltage magnitude**, **phase angle**, and **line loading** conditions across the IEEE 57-bus system.  
+- Used **MATPOWER** to simulate power flow scenarios and adjust system parameters for stability analysis.  
+- Developed **Python scripts** for numerical data processing and engineering visualization of power system results.
