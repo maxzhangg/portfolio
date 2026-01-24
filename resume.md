@@ -46,7 +46,7 @@ Northeast Electric Power University, 2019–2023 | GPA: 87.2/100
 
 ## Projects
 
-### WeOrganizer: AI-Driven B2B Content Aggregation Platform  
+### [WeOrganizer: AI-Driven B2B Content Aggregation Platform](https://ai.studio/apps/drive/1qK1Q2xgsjRjdyWyPRFvbSJ1XNgf4iD1I)  
 **Date:** 2026.01 (Design & Prototyping Phase)  
 **Description:** Conceptualized and designed a B2B SaaS solution that automates the extraction, analysis, and distribution of WeChat Official Account content, enabling Account Managers to deliver personalized market intelligence to clients efficiently.  
 **Images:** projects/wechat-gzh-organizer/1.png, projects/wechat-gzh-organizer/2.png, projects/wechat-gzh-organizer/3.png, projects/wechat-gzh-organizer/4.png  
