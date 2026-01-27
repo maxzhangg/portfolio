@@ -13,6 +13,7 @@ const App = () => {
           <Route path="/" element={<HomePage />} />
           <Route path="/resume" element={<ResumePage />} />
           <Route path="/web3" element={<Web3Page />} />
+          <Route path="/web3/:section" element={<Web3Page />} />
           <Route path="/photographer" element={<PhotographerPage />} />
           {/* 其他路径都跳转到主页 */}
           <Route path="*" element={<Navigate to="/" />} />

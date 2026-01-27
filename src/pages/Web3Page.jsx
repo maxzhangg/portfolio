@@ -1,12 +1,12 @@
 import React from "react";
+import { useParams } from "react-router-dom";
+import Web3PageDesktop from "./Web3PageDesktop";
+import Web3PageMobile from "./Web3PageMobile";
 
 const Web3Page = () => {
-  return (
-    <div className="p-8">
-      <h1 className="text-2xl font-bold">Web3 Page</h1>
-      <p>This is a placeholder for Web3 content.</p>
-    </div>
-  );
+  const { section } = useParams();
+  const isMobile = /Mobi|Android|iPhone/i.test(navigator.userAgent);
+  return isMobile ? <Web3PageMobile section={section} /> : <Web3PageDesktop section={section} />;
 };
 
 export default Web3Page;
