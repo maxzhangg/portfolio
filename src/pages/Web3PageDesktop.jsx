@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 const fallbackData = {
   profile: {
@@ -43,6 +45,10 @@ const fallbackData = {
 
 const Web3PageDesktop = ({ section }) => {
   const [data, setData] = useState(fallbackData);
+  const [projects, setProjects] = useState(fallbackData.projects);
+  const [posts, setPosts] = useState(fallbackData.posts);
+  const [experienceItems, setExperienceItems] = useState([]);
+  const [activeBlogIndex, setActiveBlogIndex] = useState(-1);
 
   useEffect(() => {
     fetch(`${import.meta.env.BASE_URL}web3/web3-data.json`)
@@ -52,6 +58,51 @@ const Web3PageDesktop = ({ section }) => {
         setData(fallbackData);
       });
   }, []);
+
+  useEffect(() => {
+    Promise.all([
+      fetch(`${import.meta.env.BASE_URL}web3/projects.json`)
+        .then((res) => (res.ok ? res.json() : Promise.reject(res.status)))
+        .catch(() => fallbackData.projects),
+      fetch(`${import.meta.env.BASE_URL}web3/blog.json`)
+        .then((res) => (res.ok ? res.json() : Promise.reject(res.status)))
+        .catch(() => fallbackData.posts),
+      fetch(`${import.meta.env.BASE_URL}web3/experience.json`)
+        .then((res) => (res.ok ? res.json() : Promise.reject(res.status)))
+        .catch(() => []),
+    ]).then(([projectsData, postsData, experienceData]) => {
+      setProjects(projectsData);
+      setPosts(postsData);
+      setExperienceItems(experienceData);
+    });
+  }, []);
+
+  useEffect(() => {
+    if (!Array.isArray(posts) || posts.length === 0) return;
+    if (!posts.some((post) => post?.md && !post.content)) return;
+    Promise.all(
+      posts.map((post) => {
+        if (!post?.md || post.content) return Promise.resolve({ ...post });
+        return fetch(`${import.meta.env.BASE_URL}${post.md}`)
+          .then((res) => (res.ok ? res.text() : Promise.reject(res.status)))
+          .then((content) => ({ ...post, content }))
+          .catch(() => ({ ...post }));
+      })
+    ).then((withContent) => {
+      setPosts(withContent);
+    });
+  }, [posts]);
+
+  useEffect(() => {
+    if (!Array.isArray(posts) || posts.length === 0) return;
+    setActiveBlogIndex(-1);
+  }, [posts]);
+
+  useEffect(() => {
+    if (section === "blog") {
+      setActiveBlogIndex(-1);
+    }
+  }, [section]);
 
   const navItems = (data.nav || []).map((item) =>
     typeof item === "string" ? { label: item, href: "#" } : item
@@ -67,8 +118,139 @@ const Web3PageDesktop = ({ section }) => {
     return `${resolvedBase}#${path}`;
   };
 
+  const handleNavClick = (item) => {
+    const label = (item?.label || "").toLowerCase();
+    const href = item?.href || "";
+    const isBlog =
+      label === "blog" || href.includes("/blog") || href.includes("web3/blog");
+    if (isBlog) {
+      setActiveBlogIndex(-1);
+    }
+  };
+
   const sectionData = data.sections?.[section];
   const isSection = Boolean(sectionData);
+  const sectionItems =
+    section === "projects"
+      ? projects
+      : section === "blog"
+      ? posts
+      : sectionData?.items || [];
+
+  const now = new Date();
+  const nowVal = Math.floor(Date.UTC(now.getFullYear(), now.getMonth(), now.getDate()) / 86400000);
+
+  const parseDateIndex = (value) => {
+    if (!value) return 0;
+    const normalized = value.trim();
+    if (/^present$/i.test(normalized) || /^now$/i.test(normalized)) {
+      return nowVal;
+    }
+    if (/^\d{4}-\d{2}-\d{2}$/.test(normalized)) {
+      const [y, m, d] = normalized.split("-");
+      return Math.floor(Date.UTC(Number(y), Number(m) - 1, Number(d)) / 86400000);
+    }
+    if (/^\d{4}-\d{2}$/.test(normalized)) {
+      const [y, m] = normalized.split("-");
+      return Math.floor(Date.UTC(Number(y), Number(m) - 1, 1) / 86400000);
+    }
+    if (/^\d{4}$/.test(normalized)) {
+      return Math.floor(Date.UTC(Number(normalized), 0, 1) / 86400000);
+    }
+    return 0;
+  };
+
+  const formatMonth = (value) => {
+    if (!value) return "";
+    if (/^\d{4}-\d{2}-\d{2}$/.test(value)) {
+      const [y, m, d] = value.split("-");
+      const date = new Date(Number(y), Number(m) - 1, Number(d));
+      return date.toLocaleDateString("en-US", {
+        month: "short",
+        day: "2-digit",
+        year: "numeric",
+      });
+    }
+    if (/^\d{4}-\d{2}$/.test(value)) {
+      const [y, m] = value.split("-");
+      const date = new Date(Number(y), Number(m) - 1, 1);
+      return date.toLocaleString("en-US", { month: "short", year: "numeric" });
+    }
+    return value;
+  };
+
+  const formatRange = (start, end) => {
+    const startLabel = formatMonth(start);
+    const endLabel = end ? formatMonth(end) : "Present";
+    return `${startLabel} - ${endLabel}`;
+  };
+
+  const timelineItems = [...(experienceItems || [])]
+    .filter((item) => item?.startDate)
+    .sort((a, b) => parseDateIndex(a.startDate) - parseDateIndex(b.startDate))
+    .map((item) => {
+      const startVal = parseDateIndex(item.startDate);
+      const endVal = item.endDate ? parseDateIndex(item.endDate) : nowVal;
+      return {
+        ...item,
+        startVal,
+        endVal: Math.max(endVal, startVal),
+        dateLabel: formatRange(item.startDate, item.endDate),
+      };
+    });
+
+  const earliestStart = Math.min(...timelineItems.map((item) => item.startVal), nowVal);
+  const timelineMin = earliestStart;
+  const timelineMax = nowVal;
+  const unitPerDay = 2.4; //改时间轴长度
+  const timelineHeight = Math.max(800, (timelineMax - timelineMin) * unitPerDay + 120);
+  const timelineUnit = unitPerDay;
+  const estimateBlockHeight = (item) => {
+    const base = 84;
+    const titleLen = (item.title || "").length;
+    const descLen = (item.description || "").length;
+    const charsPerLine = 36;
+    const lines = Math.ceil((titleLen + descLen) / charsPerLine);
+    return base + lines * 18;
+  };
+
+  const markdownComponents = {
+    h1: ({ node, ...props }) => (
+      <h1 className="text-2xl font-semibold text-white mt-4" {...props} />
+    ),
+    h2: ({ node, ...props }) => (
+      <h2 className="text-xl font-semibold text-white mt-4" {...props} />
+    ),
+    h3: ({ node, ...props }) => (
+      <h3 className="text-lg font-semibold text-white mt-3" {...props} />
+    ),
+    a: ({ node, ...props }) => (
+      <a className="text-emerald-200 underline hover:text-emerald-100" {...props} />
+    ),
+    code: ({ inline, className, children, ...props }) => {
+      if (inline) {
+        return (
+          <code className="rounded bg-slate-900/70 px-1 py-0.5 text-emerald-200" {...props}>
+            {children}
+          </code>
+        );
+      }
+      return (
+        <pre className="mt-3 overflow-x-auto rounded-xl border border-slate-700/40 bg-slate-950/60 p-4 text-sm text-slate-100">
+          <code className={className} {...props}>
+            {children}
+          </code>
+        </pre>
+      );
+    },
+    img: ({ node, ...props }) => (
+      <img className="mt-3 w-full rounded-xl border border-slate-700/40" {...props} />
+    ),
+    ul: ({ node, ...props }) => <ul className="mt-3 list-disc pl-5" {...props} />,
+    ol: ({ node, ...props }) => <ol className="mt-3 list-decimal pl-5" {...props} />,
+    li: ({ node, ...props }) => <li className="mb-1" {...props} />,
+    p: ({ node, ...props }) => <p className="mt-3 leading-relaxed" {...props} />,
+  };
 
   return (
     <div className="web3-shell -m-4 min-h-screen text-slate-100">
@@ -165,6 +347,7 @@ const Web3PageDesktop = ({ section }) => {
                 <a
                   key={item.label}
                   href={resolveHref(item.href)}
+                  onClick={() => handleNavClick(item)}
                   className="flex items-center justify-between rounded-xl border border-transparent px-3 py-2 text-slate-200 transition hover:border-slate-600/60 hover:bg-white/5"
                 >
                   <span>{item.label}</span>
@@ -245,7 +428,7 @@ const Web3PageDesktop = ({ section }) => {
                     </span>
                   </div>
                   <div className="mt-6 grid gap-4 lg:grid-cols-3">
-                    {(data.projects || []).map((project) => (
+                    {(projects || []).map((project) => (
                       <a
                         key={project.title}
                         href={project.link}
@@ -276,7 +459,7 @@ const Web3PageDesktop = ({ section }) => {
                   >
                     <h2 className="text-2xl font-semibold">Latest writing</h2>
                     <div className="mt-6 space-y-4">
-                      {(data.posts || []).map((post) => (
+                      {(posts || []).map((post) => (
                         <a
                           key={post.title}
                           href={post.link}
@@ -331,23 +514,220 @@ const Web3PageDesktop = ({ section }) => {
                   <p className="mt-4 text-lg text-[var(--muted)]">{sectionData.summary}</p>
                 </section>
 
-                <section className="web3-card reveal rounded-3xl p-8" style={{ animationDelay: "260ms" }}>
-                  <div className="space-y-4">
-                    {(sectionData.items || []).map((item) => (
+                {section === "blog" ? (
+                  <section
+                    className="web3-card reveal rounded-3xl p-8"
+                    style={{ animationDelay: "260ms" }}
+                  >
+                    <div
+                      className={`grid gap-6 ${
+                        activeBlogIndex === -1
+                          ? "lg:grid-cols-1"
+                          : "lg:grid-cols-[0.6fr_1.6fr]"
+                      }`}
+                    >
                       <div
-                        key={item.title}
-                        className="rounded-2xl border border-slate-700/40 bg-slate-950/40 p-5"
+                        className={`space-y-4 ${
+                          activeBlogIndex === -1
+                            ? ""
+                            : "max-h-[520px] overflow-y-auto pr-2"
+                        }`}
                       >
-                        <div className="flex items-center justify-between text-xs uppercase tracking-[0.18em] text-[var(--muted)]">
-                          <span>{item.meta}</span>
-                          <span className="font-mono">{item.read}</span>
-                        </div>
-                        <h3 className="mt-3 text-xl font-semibold text-white">{item.title}</h3>
-                        <p className="mt-2 text-sm text-[var(--muted)]">{item.body}</p>
+                        {(sectionItems || []).map((item, index) => (
+                          <button
+                            key={item.title}
+                            onClick={() => setActiveBlogIndex(index)}
+                            className={`w-full text-left rounded-2xl border px-5 py-4 transition ${
+                              activeBlogIndex === index
+                                ? "border-emerald-300/60 bg-emerald-300/10"
+                                : "border-slate-700/40 bg-slate-950/40 hover:border-slate-500/60"
+                            }`}
+                          >
+                            <div className="flex items-center justify-between text-xs uppercase tracking-[0.18em] text-[var(--muted)]">
+                              <span>{item.date}</span>
+                            </div>
+                            <h3 className="mt-3 text-lg font-semibold text-white">
+                              {activeBlogIndex === -1 ? item.title : item.titleLeft || item.title}
+                            </h3>
+                            {activeBlogIndex === -1 && (
+                              <p className="mt-2 text-sm text-[var(--muted)]">{item.summary}</p>
+                            )}
+                          </button>
+                        ))}
                       </div>
-                    ))}
-                  </div>
-                </section>
+
+                      {sectionItems?.[activeBlogIndex] && (
+                        <div className="rounded-2xl border border-slate-700/40 bg-slate-950/40 p-6">
+                          <>
+                            <div className="flex items-center justify-between text-xs uppercase tracking-[0.18em] text-[var(--muted)]">
+                              <span>{sectionItems[activeBlogIndex].date}</span>
+                            </div>
+                            <div className="mt-4 text-sm text-[var(--muted)]">
+                              <ReactMarkdown
+                                remarkPlugins={[remarkGfm]}
+                                components={markdownComponents}
+                              >
+                                {sectionItems[activeBlogIndex].content ||
+                                  sectionItems[activeBlogIndex].summary}
+                              </ReactMarkdown>
+                            </div>
+                          </>
+                        </div>
+                      )}
+                    </div>
+                  </section>
+                ) : section === "experience" ? (
+                  <section
+                    className="web3-card reveal rounded-3xl p-8"
+                    style={{ animationDelay: "260ms" }}
+                  >
+                    <div className="relative">
+                      <div
+                        className="absolute left-1/2 top-0 w-px -translate-x-1/2 bg-slate-700/60"
+                        style={{ height: `${timelineHeight}px` }}
+                      />
+                      <div className="relative" style={{ height: `${timelineHeight}px` }}>
+                        {timelineItems.map((item, index) => {
+                          const isStudy = item.type === "study";
+                          const barColor = isStudy ? "bg-emerald-400/70" : "bg-blue-400/70";
+                          const lineColor = barColor;
+                          const clamp = (value) =>
+                            Math.min(timelineHeight, Math.max(0, value));
+                          const startOffset = clamp(
+                            (timelineMax - item.startVal) * timelineUnit
+                          );
+                          const endOffset = clamp(
+                            (timelineMax - item.endVal) * timelineUnit
+                          );
+                          const duration = Math.max(12, startOffset - endOffset);
+                          const barTop = endOffset;
+                          const barWidth = 50;
+                          const barLeft = isStudy
+                            ? `calc(50% - ${barWidth}px - 18px)`
+                            : `calc(50% + 18px)`;
+                          const lineLeft = isStudy ? "calc(50% - 18px)" : "calc(50% + 18px)";
+                          const textWidth = 240;
+                          const lineLength = 280;
+                          const barCenter = isStudy
+                            ? `calc(50% - 18px - ${barWidth / 2}px)`
+                            : `calc(50% + 18px + ${barWidth / 2}px)`;
+                          const lineEnd = isStudy
+                            ? `calc(${barCenter} - ${lineLength}px)`
+                            : `calc(${barCenter} + ${lineLength}px)`;
+                          const textLeft = isStudy
+                            ? lineEnd
+                            : `calc(${lineEnd} - ${textWidth}px)`;
+
+                          return (
+                            <div
+                              key={`${item.title}-${index}`}
+                              className="absolute left-0 right-0"
+                              style={{ top: `${barTop}px`, height: `${duration}px` }}
+                            >
+                              <div
+                                className={`absolute ${barColor} rounded-xl`}
+                                style={{
+                                  height: `${duration}px`,
+                                  width: `${barWidth}px`,
+                                  left: barLeft,
+                                }}
+                              />
+                              <div
+                                className={`absolute h-px ${lineColor}`}
+                                style={{
+                                  top: 0,
+                                  left: isStudy ? lineEnd : barCenter,
+                                  width: isStudy
+                                    ? `calc(${barCenter} - ${lineEnd})`
+                                    : `calc(${lineEnd} - ${barCenter})`,
+                                }}
+                              />
+                              <div
+                                className="absolute h-2 w-2 rounded-full bg-emerald-300"
+                                style={{
+                                  top: "-3px",
+                                  left: isStudy
+                                    ? `calc(${textLeft} - 4px)`
+                                    : `calc(${textLeft} + ${textWidth}px - 4px)`,
+                                }}
+                              />
+                              <div
+                                className="absolute text-xs text-[var(--muted)]"
+                                style={{
+                                  left: textLeft,
+                                  top: "12px",
+                                  width: `${textWidth}px`,
+                                }}
+                              >
+                                <p className="text-xs uppercase tracking-[0.18em] text-[var(--muted)]">
+                                  {item.dateLabel}
+                                </p>
+                                {item.type === "study" ? (
+                                  item.link ? (
+                                    <a
+                                      href={item.link}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      className="mt-2 block text-sm font-semibold text-emerald-200 underline hover:text-emerald-100"
+                                    >
+                                      {item.organization}
+                                    </a>
+                                  ) : (
+                                    <p className="mt-2 text-sm font-semibold text-white">
+                                      {item.organization}
+                                    </p>
+                                  )
+                                ) : (
+                                  <p className="mt-2 text-sm font-semibold text-white">{item.title}</p>
+                                )}
+                                {item.type !== "study" && item.organization && (
+                                  item.link ? (
+                                    <a
+                                      href={item.link}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      className="mt-1 block text-xs text-emerald-200 underline hover:text-emerald-100"
+                                    >
+                                      {item.organization}
+                                    </a>
+                                  ) : (
+                                    <p className="mt-1 text-xs text-slate-300">{item.organization}</p>
+                                  )
+                                )}
+                                <p className="mt-2 text-xs text-[var(--muted)] whitespace-pre-line">
+                                  {item.description}
+                                </p>
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  </section>
+                ) : (
+                  <section
+                    className="web3-card reveal rounded-3xl p-8"
+                    style={{ animationDelay: "260ms" }}
+                  >
+                    <div className="space-y-4">
+                      {(sectionItems || []).map((item) => (
+                        <div
+                          key={item.title}
+                          className="rounded-2xl border border-slate-700/40 bg-slate-950/40 p-5"
+                        >
+                          <div className="flex items-center justify-between text-xs uppercase tracking-[0.18em] text-[var(--muted)]">
+                            <span>{item.meta || item.type || item.date}</span>
+                            <span className="font-mono">{item.read}</span>
+                          </div>
+                          <h3 className="mt-3 text-xl font-semibold text-white">{item.title}</h3>
+                          <p className="mt-2 text-sm text-[var(--muted)]">
+                            {item.body || item.summary}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+                  </section>
+                )}
               </>
             )}
           </main>

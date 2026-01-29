@@ -1,13 +1,14 @@
 {
   "profile": {
     "name": "Max Zhang",
-    "title": "Web3 product designer / builder",
+    "title": "Web3 Beginner / Learner",
     "tagline": "A calm home for on-chain experiments, shipping notes, and product launches."
   },
   "nav": [
     { "label": "About", "href": "web3/about" },
     { "label": "Projects", "href": "web3/projects" },
     { "label": "Blog", "href": "web3/blog" },
+    { "label": "Experience", "href": "web3/experience" },
     { "label": "Research", "href": "web3/research" },
     { "label": "Contact", "href": "web3/contact" }
   ],
@@ -15,49 +16,6 @@
     { "label": "Chains", "value": "6 live" },
     { "label": "Experiments", "value": "18 shipped" },
     { "label": "Collaborations", "value": "9 teams" }
-  ],
-  "projects": [
-    {
-      "title": "ProofKit",
-      "type": "ZK Protocol",
-      "summary": "Privacy-preserving proofs for on-chain identity flows with a clean, auditable API surface.",
-      "tags": ["ZK", "Circom", "Rust"],
-      "link": "#"
-    },
-    {
-      "title": "Signal Mesh",
-      "type": "L2 Infra",
-      "summary": "Realtime sequencer telemetry and alerting dashboards for rollup operators.",
-      "tags": ["L2", "Data", "Observability"],
-      "link": "#"
-    },
-    {
-      "title": "Vault Garden",
-      "type": "DeFi Studio",
-      "summary": "A curated set of structured vaults that blend stable yield and risk controls.",
-      "tags": ["DeFi", "Risk", "Design"],
-      "link": "#"
-    }
-  ],
-  "posts": [
-    {
-      "title": "Designing trust layers for wallet-first onboarding",
-      "date": "Jan 12, 2026",
-      "read": "6 min read",
-      "link": "#"
-    },
-    {
-      "title": "What I learned building a chain-agnostic analytics stack",
-      "date": "Dec 21, 2025",
-      "read": "8 min read",
-      "link": "#"
-    },
-    {
-      "title": "The calm UI pattern: reducing cognitive load in DeFi",
-      "date": "Nov 02, 2025",
-      "read": "5 min read",
-      "link": "#"
-    }
   ],
   "newsletter": {
     "title": "Start a conversation",
@@ -90,40 +48,12 @@
     "projects": {
       "badge": "Projects",
       "title": "Experiments and shipped products",
-      "summary": "A short list of recent launches and internal explorations.",
-      "items": [
-        {
-          "title": "ProofKit",
-          "meta": "ZK Protocol",
-          "read": "Case study",
-          "body": "Identity proofs with a clean API, polished flows, and audit-friendly UI."
-        },
-        {
-          "title": "Signal Mesh",
-          "meta": "L2 Infra",
-          "read": "Ops",
-          "body": "Operator dashboards for rollup telemetry and incident response."
-        }
-      ]
+      "summary": "A short list of recent launches and internal explorations."
     },
     "blog": {
       "badge": "Blog",
       "title": "Weekly essays on web3 product",
-      "summary": "Short notes on UX, trust, and building for chain-native users.",
-      "items": [
-        {
-          "title": "Designing trust layers for wallet-first onboarding",
-          "meta": "Jan 12, 2026",
-          "read": "6 min",
-          "body": "How to reduce friction and increase confidence during wallet connects."
-        },
-        {
-          "title": "The calm UI pattern: reducing cognitive load in DeFi",
-          "meta": "Nov 02, 2025",
-          "read": "5 min",
-          "body": "Designing slower, clearer interfaces for high-stakes finance."
-        }
-      ]
+      "summary": "Short notes on UX, trust, and building for chain-native users."
     },
     "research": {
       "badge": "Research",
@@ -162,6 +92,11 @@
           "body": "Share a brief pitch and relevant links."
         }
       ]
+    },
+    "experience": {
+      "badge": "Experience",
+      "title": "Learning + Work Timeline",
+      "summary": "A quick timeline of my education and industry experience."
     }
   }
 }
