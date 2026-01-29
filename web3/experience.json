@@ -1,0 +1,47 @@
+[
+  {
+    "type": "study",
+    "title": "Web3 Internship Bootcamp · Learner",
+    "organization": "Web3 Internship Bootcamp",
+    "description": "Participated in a 4-week Web3 internship program jointly initiated by ETHPanda and LXDAO.\nFocused on hands-on learning through task-driven practice, covering Web3 fundamentals, tooling, and real-world workflows.\nCompleted guided study and practical tasks along technical and operational tracks, producing verifiable learning outcomes.",
+    "link": "https://web3career.build/",
+    "startDate": "2026-01-12",
+    "endDate": "present"
+  },
+  {
+    "type": "work",
+    "title": "Organizing Team · Technical Support (Night Shift)",
+    "organization": "SPARK AI Hackathon",
+    "description": "Provided night-shift technical support during a high-intensity AI hackathon.\nAssisted participants with development environment setup, tooling configuration, and common debugging issues.\nCoordinated with the organizing team to resolve technical blockers and ensure smooth event operations during off-peak hours.",
+    "link": "https://github.com/CasualHackathon/SPARK-AI-Hackathon",
+    "startDate": "2026-01-23",
+    "endDate": "present"
+  },
+  {
+    "type": "study",
+    "title": "Master of Engineering, Electrical and Computer Engineering",
+    "organization": "University of Ottawa",
+    "description": "GPA 9.22/10.\nGraduate training in electrical and computer engineering.\nCoursework covering systems, computer networks, digital communications, applied machine learning, data science, and advanced software testing.",
+    "link": "https://www.uottawa.ca/en",
+    "startDate": "2023-09-01",
+    "endDate": "2025-10-16"
+  },
+  {
+    "type": "work",
+    "title": "Service Router Test Platform Dev Student (Intern)",
+    "organization": "Nokia",
+    "description": "Worked with Ethernet and Optical teams to validate hardware and embedded software in a Linux-based regression environment.\nDeveloped and executed 3 optical test cases and conducted 1,078 regression tests on QSFP28 4x25G/100G PSM4 transceivers.\nReported 7 critical embedded software bugs and verified 8 fixes across multiple software images.\nImproved GASH scripts and CI/CD-driven testing workflows.",
+    "link": "https://www.nokia.com/careers/our-locations/canada/",
+    "startDate": "2024-04-30",
+    "endDate": "2024-12-20"
+  },
+  {
+    "type": "study",
+    "title": "Bachelor of Engineering, Electrical Engineering and Automation",
+    "organization": "Northeast Electric Power University",
+    "description": "GPA 87.2/100.\nUndergraduate training with a strong foundation in electrical engineering, control systems, power electronics, power systems, and automation.\nSupported by extensive laboratory work and engineering projects.",
+    "link": "https://en.neepu.edu.cn/",
+    "startDate": "2019-09-01",
+    "endDate": "2023-06-28"
+  }
+]
