@@ -2,8 +2,9 @@
   {
     "title": "Solidity Basics: What I Learned as Beginner",
     "titleLeft": "Solidity Basics",
+    "slug": "solidity-basics",
     "date": "Jan 28, 2026",
-    "link": "#",
+    "link": "web3/blog/solidity-basics",
     "summary": "My first Solidity study notes — basic syntax and concepts, nothing deep yet.",
     "md": "web3/blog/2026-01-28-solidity-basics.md"
   }

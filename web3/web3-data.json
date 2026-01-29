@@ -2,101 +2,83 @@
   "profile": {
     "name": "Max Zhang",
     "title": "Web3 Beginner / Learner",
-    "tagline": "A calm home for on-chain experiments, shipping notes, and product launches."
+    "tagline": "A calm space to learn Web3, try small experiments, and keep notes along the way."
   },
   "nav": [
     { "label": "About", "href": "web3/about" },
     { "label": "Projects", "href": "web3/projects" },
     { "label": "Blog", "href": "web3/blog" },
     { "label": "Experience", "href": "web3/experience" },
-    { "label": "Research", "href": "web3/research" },
-    { "label": "Contact", "href": "web3/contact" }
+    { "label": "Research", "href": "web3/research" }
   ],
   "stats": [
-    { "label": "Chains", "value": "6 live" },
-    { "label": "Experiments", "value": "18 shipped" },
-    { "label": "Collaborations", "value": "9 teams" }
+    { "label": "Chains", "value": "2–3 learning" },
+    { "label": "Experiments", "value": "small demos" },
+    { "label": "Collaborations", "value": "study groups" }
   ],
   "newsletter": {
-    "title": "Start a conversation",
-    "body": "Weekly notes on product strategy, on-chain UX, and the quiet work behind strong crypto brands.",
+    "title": "Learning notes",
+    "body": "Occasional notes on learning Web3, experimenting with small ideas, and reflecting on what works and what doesn’t.",
     "cta": "Subscribe",
-    "hint": "No spam. One email per week, always useful."
+    "hint": "Low frequency. Mostly notes to myself, shared publicly."
   },
-  "socials": ["Newsletter", "Farcaster", "GitHub"]
-  ,
+  "socials": [
+    { "label": "GitHub", "href": "https://github.com/maxzhangg" },
+    { "label": "X", "href": "https://x.com/maxzhangg" }
+  ],
   "sections": {
     "about": {
       "badge": "About",
-      "title": "Designing quiet tools for on-chain builders",
-      "summary": "I focus on product strategy, interface systems, and operational storytelling for web3 teams.",
+      "title": "Learning Web3 through practice",
+      "summary": "I’m at an early stage of my Web3 journey, focusing on understanding core concepts through hands-on experiments and careful note-taking.",
       "items": [
         {
-          "title": "Focus areas",
-          "meta": "Core",
+          "title": "Current learning focus",
+          "meta": "Beginner",
           "read": "Overview",
-          "body": "Wallet onboarding, ZK UX, tokenized communities, and calm financial dashboards."
+          "body": "Smart contracts basics, on-chain data, simple frontend integrations, and how users interact with blockchain systems."
         },
         {
-          "title": "Workflow",
+          "title": "How I learn",
           "meta": "Process",
           "read": "Notes",
-          "body": "Research → product narrative → design systems → prototype → handoff."
+          "body": "Read docs → build small demos → break things → write notes → repeat."
         }
       ]
     },
     "projects": {
       "badge": "Projects",
-      "title": "Experiments and shipped products",
-      "summary": "A short list of recent launches and internal explorations."
+      "title": "Learning experiments",
+      "summary": "Small projects and demos built while learning Web3 and related tools."
     },
     "blog": {
       "badge": "Blog",
-      "title": "Weekly essays on web3 product",
-      "summary": "Short notes on UX, trust, and building for chain-native users."
+      "title": "Blog",
+      "summary": "Writing about things I’m exploring, thinking about, and building along the way."
     },
     "research": {
       "badge": "Research",
-      "title": "Field notes and investigations",
-      "summary": "Explorations in on-chain behavior, governance rituals, and design ethics.",
+      "title": "Explorations and questions",
+      "summary": "Early-stage explorations into how on-chain systems work and how people interact with them.",
       "items": [
         {
-          "title": "Governance rituals",
-          "meta": "DAO Research",
-          "read": "Brief",
-          "body": "How teams keep participation high beyond token incentives."
-        },
-        {
-          "title": "Wallet readability",
-          "meta": "UX Study",
+          "title": "On-chain participation",
+          "meta": "Learning topic",
           "read": "Draft",
-          "body": "Patterns that help people understand transactions before signing."
-        }
-      ]
-    },
-    "contact": {
-      "badge": "Contact",
-      "title": "Let’s build together",
-      "summary": "Open to product work, design systems, and fractional roles.",
-      "items": [
-        {
-          "title": "Email",
-          "meta": "Primary",
-          "read": "hello@yourdomain.xyz",
-          "body": "Send a short overview and desired timeline."
+          "body": "Notes on why people participate in Web3 communities and what seems confusing at first glance."
         },
         {
-          "title": "DM",
-          "meta": "Social",
-          "read": "Farcaster",
-          "body": "Share a brief pitch and relevant links."
+          "title": "Transaction understanding",
+          "meta": "UX Observation",
+          "read": "Draft",
+          "body": "Beginner observations on what makes transactions hard to understand before signing."
         }
       ]
     },
     "experience": {
       "badge": "Experience",
-      "title": "Learning + Work Timeline",
-      "summary": "A quick timeline of my education and industry experience."
+      "title": "Learning + Background",
+      "summary": "A brief timeline of my education, technical background, and current Web3 learning path."
     }
   }
 }
