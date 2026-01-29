@@ -15,16 +15,6 @@ const fallbackData = {
     { label: "Experiments", value: "18 shipped" },
     { label: "Collaborations", value: "9 teams" },
   ],
-  projects: [
-    {
-      title: "ProofKit",
-      type: "ZK Protocol",
-      summary:
-        "Privacy-preserving proofs for on-chain identity flows with a clean, auditable API surface.",
-      tags: ["ZK", "Circom", "Rust"],
-      link: "#",
-    },
-  ],
   posts: [
     {
       title: "Designing trust layers for wallet-first onboarding",
@@ -45,7 +35,6 @@ const fallbackData = {
 
 const Web3PageDesktop = ({ section, slug }) => {
   const [data, setData] = useState(fallbackData);
-  const [projects, setProjects] = useState(fallbackData.projects);
   const [projectContent, setProjectContent] = useState("");
   const [projectList, setProjectList] = useState([]);
   const [expandedAll, setExpandedAll] = useState(false);
@@ -64,17 +53,13 @@ const Web3PageDesktop = ({ section, slug }) => {
 
   useEffect(() => {
     Promise.all([
-      fetch(`${import.meta.env.BASE_URL}web3/projects.json`)
-        .then((res) => (res.ok ? res.json() : Promise.reject(res.status)))
-        .catch(() => fallbackData.projects),
       fetch(`${import.meta.env.BASE_URL}web3/blog.json`)
         .then((res) => (res.ok ? res.json() : Promise.reject(res.status)))
         .catch(() => fallbackData.posts),
       fetch(`${import.meta.env.BASE_URL}web3/experience.json`)
         .then((res) => (res.ok ? res.json() : Promise.reject(res.status)))
         .catch(() => []),
-    ]).then(([projectsData, postsData, experienceData]) => {
-      setProjects(projectsData);
+    ]).then(([postsData, experienceData]) => {
       setPosts(postsData);
       setExperienceItems(experienceData);
     });
@@ -119,10 +104,22 @@ const Web3PageDesktop = ({ section, slug }) => {
       const link = titleMatch ? titleMatch[2] : "#";
 
       const dateLine = lines.find((l) => l.toLowerCase().startsWith("**date:**"));
+      const typeLine = lines.find((l) => l.toLowerCase().startsWith("**type:**"));
+      const tagsLine = lines.find((l) => l.toLowerCase().startsWith("**tags:**"));
+      const readLine = lines.find((l) => l.toLowerCase().startsWith("**read:**"));
       const descriptionLine = lines.find((l) =>
         l.toLowerCase().startsWith("**description:**")
       );
       const date = dateLine ? dateLine.replace(/\*\*Date:\*\*\s*/i, "").trim() : "";
+      const type = typeLine ? typeLine.replace(/\*\*Type:\*\*\s*/i, "").trim() : "";
+      const tags = tagsLine
+        ? tagsLine
+            .replace(/\*\*Tags:\*\*\s*/i, "")
+            .split(",")
+            .map((s) => s.trim())
+            .filter(Boolean)
+        : [];
+      const read = readLine ? readLine.replace(/\*\*Read:\*\*\s*/i, "").trim() : "";
       const description = descriptionLine
         ? descriptionLine.replace(/\*\*Description:\*\*\s*/i, "").trim()
         : "";
@@ -151,6 +148,9 @@ const Web3PageDesktop = ({ section, slug }) => {
         title,
         link,
         date,
+        type,
+        tags,
+        read,
         description,
         contributions,
         images,
@@ -215,6 +215,7 @@ const Web3PageDesktop = ({ section, slug }) => {
       : section === "blog"
       ? posts
       : sectionData?.items || [];
+  const featuredProjects = projectList.slice(0, 3);
 
   useEffect(() => {
     if (section !== "blog" || !slug) return;
@@ -510,25 +511,33 @@ const Web3PageDesktop = ({ section, slug }) => {
                     </span>
                   </div>
                   <div className="mt-6 grid gap-4 lg:grid-cols-3">
-                    {(projects || []).map((project) => (
+                    {featuredProjects.map((project) => (
                       <a
-                        key={project.title}
+                        key={project.id ?? project.title}
                         href={project.link}
                         className="group rounded-2xl border border-slate-700/40 bg-slate-950/40 p-5 transition hover:border-blue-400/50 hover:bg-white/5"
                       >
                         <div className="flex items-center justify-between text-xs uppercase tracking-[0.18em] text-[var(--muted)]">
-                          <span>{project.type}</span>
-                          <span className="font-mono">Open</span>
+                          <span>{project.type || project.date || "Project"}</span>
+                          {project.link && project.link !== "#" && (
+                            <span className="font-mono">Open</span>
+                          )}
                         </div>
                         <h3 className="mt-3 text-xl font-semibold text-white">{project.title}</h3>
-                        <p className="mt-2 text-sm text-[var(--muted)]">{project.summary}</p>
-                        <div className="mt-4 flex flex-wrap gap-2 text-xs font-medium">
-                          {(project.tags || []).map((tag) => (
-                            <span key={tag} className="web3-chip rounded-full px-3 py-1">
-                              {tag}
-                            </span>
-                          ))}
-                        </div>
+                        {(project.summary || project.description) && (
+                          <p className="mt-2 text-sm text-[var(--muted)]">
+                            {project.summary || project.description}
+                          </p>
+                        )}
+                        {project.tags?.length > 0 && (
+                          <div className="mt-4 flex flex-wrap gap-2 text-xs font-medium">
+                            {project.tags.map((tag) => (
+                              <span key={tag} className="web3-chip rounded-full px-3 py-1">
+                                {tag}
+                              </span>
+                            ))}
+                          </div>
+                        )}
                       </a>
                     ))}
                   </div>
