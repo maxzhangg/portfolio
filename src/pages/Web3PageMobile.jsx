@@ -207,6 +207,7 @@ const Web3PageMobile = ({ section }) => {
     p: ({ node, ...props }) => <p className="mt-3 leading-relaxed" {...props} />,
   };
 
+
   return (
     <div className="web3-shell -m-4 min-h-screen text-slate-100">
       <style>{`
@@ -310,7 +311,11 @@ const Web3PageMobile = ({ section }) => {
                         <span>{item.meta || item.type || item.date}</span>
                         <span className="font-mono">{item.read}</span>
                       </div>
-                      <h3 className="mt-3 text-lg font-semibold">{item.title}</h3>
+                      <h3 className="mt-3 text-lg font-semibold">
+                        {section === "blog" && activeBlogIndex !== -1
+                          ? item.titleLeft || item.title
+                          : item.title}
+                      </h3>
                       {section === "blog" && item.content ? (
                         <div className="mt-3 text-sm text-[var(--muted)]">
                           <ReactMarkdown
@@ -335,11 +340,21 @@ const Web3PageMobile = ({ section }) => {
           <section className="rounded-3xl border border-slate-700/40 bg-slate-950/50 p-6">
             <p className="text-xs uppercase tracking-[0.2em] text-[var(--muted)]">Stay connected</p>
             <div className="mt-4 space-y-2 text-sm">
-              {(data.socials || []).map((item) => (
-                <a key={item} className="block text-slate-200" href="#">
-                  {item}
-                </a>
-              ))}
+              {(data.socials || []).map((item) => {
+                const label = typeof item === "string" ? item : item.label;
+                const href = typeof item === "string" ? "#" : item.href || "#";
+                return (
+                  <a
+                    key={label}
+                    className="block text-slate-200"
+                    href={href}
+                    target={href.startsWith("http") ? "_blank" : undefined}
+                    rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
+                  >
+                    {label}
+                  </a>
+                );
+              })}
             </div>
           </section>
         </div>

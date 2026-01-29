@@ -43,9 +43,12 @@ const fallbackData = {
   socials: ["Newsletter", "Farcaster", "GitHub"],
 };
 
-const Web3PageDesktop = ({ section }) => {
+const Web3PageDesktop = ({ section, slug }) => {
   const [data, setData] = useState(fallbackData);
   const [projects, setProjects] = useState(fallbackData.projects);
+  const [projectContent, setProjectContent] = useState("");
+  const [projectList, setProjectList] = useState([]);
+  const [expandedAll, setExpandedAll] = useState(false);
   const [posts, setPosts] = useState(fallbackData.posts);
   const [experienceItems, setExperienceItems] = useState([]);
   const [activeBlogIndex, setActiveBlogIndex] = useState(-1);
@@ -78,6 +81,13 @@ const Web3PageDesktop = ({ section }) => {
   }, []);
 
   useEffect(() => {
+    fetch(`${import.meta.env.BASE_URL}web3/projects.md`)
+      .then((res) => (res.ok ? res.text() : Promise.reject(res.status)))
+      .then((text) => setProjectContent(text))
+      .catch(() => setProjectContent(""));
+  }, []);
+
+  useEffect(() => {
     if (!Array.isArray(posts) || posts.length === 0) return;
     if (!posts.some((post) => post?.md && !post.content)) return;
     Promise.all(
@@ -94,15 +104,84 @@ const Web3PageDesktop = ({ section }) => {
   }, [posts]);
 
   useEffect(() => {
+    if (!projectContent) {
+      setProjectList([]);
+      return;
+    }
+    const sections = projectContent.split("## Projects");
+    const projectsSection = sections[1] || projectContent;
+    const rawItems = projectsSection.split(/^### /gm).filter((block) => block.trim());
+    const parsedProjects = rawItems.map((block, index) => {
+      const lines = block.trim().split("\n");
+      const titleLine = lines[0];
+      const titleMatch = titleLine.match(/\[([^\]]+)\]\(([^)]+)\)/);
+      const title = titleMatch ? titleMatch[1] : titleLine.trim();
+      const link = titleMatch ? titleMatch[2] : "#";
+
+      const dateLine = lines.find((l) => l.toLowerCase().startsWith("**date:**"));
+      const descriptionLine = lines.find((l) =>
+        l.toLowerCase().startsWith("**description:**")
+      );
+      const date = dateLine ? dateLine.replace(/\*\*Date:\*\*\s*/i, "").trim() : "";
+      const description = descriptionLine
+        ? descriptionLine.replace(/\*\*Description:\*\*\s*/i, "").trim()
+        : "";
+
+      const contribIndex = lines.findIndex((l) =>
+        l.toLowerCase().startsWith("**key contributions:**")
+      );
+      const imagesLine = lines.find((l) =>
+        l.toLowerCase().startsWith("**images:**")
+      );
+      const images = imagesLine
+        ? imagesLine
+            .replace(/\*\*Images:\*\*\s*/i, "")
+            .split(",")
+            .map((s) => s.trim())
+            .filter(Boolean)
+        : [];
+
+      let contributions = "";
+      if (contribIndex !== -1) {
+        contributions = lines.slice(contribIndex + 1).join("\n").trim();
+      }
+
+      return {
+        id: index,
+        title,
+        link,
+        date,
+        description,
+        contributions,
+        images,
+        expanded: false,
+      };
+    });
+    setProjectList(parsedProjects);
+  }, [projectContent]);
+
+  const toggleProjectExpand = (id) => {
+    setProjectList((prev) =>
+      prev.map((p) => (p.id === id ? { ...p, expanded: !p.expanded } : p))
+    );
+  };
+
+  const toggleProjectAll = () => {
+    const shouldExpand = !expandedAll;
+    setProjectList((prev) => prev.map((p) => ({ ...p, expanded: shouldExpand })));
+    setExpandedAll(shouldExpand);
+  };
+
+  useEffect(() => {
     if (!Array.isArray(posts) || posts.length === 0) return;
     setActiveBlogIndex(-1);
   }, [posts]);
 
   useEffect(() => {
-    if (section === "blog") {
+    if (section === "blog" && !slug) {
       setActiveBlogIndex(-1);
     }
-  }, [section]);
+  }, [section, slug]);
 
   const navItems = (data.nav || []).map((item) =>
     typeof item === "string" ? { label: item, href: "#" } : item
@@ -132,10 +211,16 @@ const Web3PageDesktop = ({ section }) => {
   const isSection = Boolean(sectionData);
   const sectionItems =
     section === "projects"
-      ? projects
+      ? projectList
       : section === "blog"
       ? posts
       : sectionData?.items || [];
+
+  useEffect(() => {
+    if (section !== "blog" || !slug) return;
+    const matchIndex = (posts || []).findIndex((post) => post.slug === slug);
+    setActiveBlogIndex(matchIndex >= 0 ? matchIndex : -1);
+  }, [section, slug, posts]);
 
   const now = new Date();
   const nowVal = Math.floor(Date.UTC(now.getFullYear(), now.getMonth(), now.getDate()) / 86400000);
@@ -252,6 +337,7 @@ const Web3PageDesktop = ({ section }) => {
     p: ({ node, ...props }) => <p className="mt-3 leading-relaxed" {...props} />,
   };
 
+
   return (
     <div className="web3-shell -m-4 min-h-screen text-slate-100">
       <style>{`
@@ -315,14 +401,15 @@ const Web3PageDesktop = ({ section }) => {
           <div className="absolute bottom-0 right-16 h-56 w-56 rounded-full bg-emerald-300 blur-[140px]" />
         </div>
 
-        <div className="relative mx-auto flex max-w-6xl flex-col gap-8 px-6 pb-16 pt-12 lg:flex-row lg:gap-10 lg:px-10">
+        <div className="relative mx-auto flex max-w-7xl flex-col gap-8 px-6 pb-16 pt-12 lg:flex-row lg:items-start lg:gap-10 lg:px-10">
           <aside
-            className={`web3-card reveal w-full max-w-xl rounded-3xl p-8 ${
-              isSection ? "lg:relative lg:top-0 lg:w-[260px]" : "lg:sticky lg:top-8 lg:h-fit lg:w-[320px]"
-            }`}
+            className="web3-card reveal flex-none w-full rounded-3xl p-8 lg:sticky lg:top-8 lg:h-fit lg:w-[320px] lg:max-w-[320px]"
             style={{ animationDelay: "120ms" }}
           >
-            <div className="flex items-center gap-4">
+            <a
+              href={`${resolvedBase}#/web3`}
+              className="flex items-center gap-4 rounded-2xl transition hover:bg-white/5"
+            >
               <div className="flex h-12 w-12 items-center justify-center overflow-hidden rounded-2xl bg-white text-slate-900 shadow-lg">
                 <img
                   src={`${import.meta.env.BASE_URL}head_web3.png`}
@@ -334,7 +421,7 @@ const Web3PageDesktop = ({ section }) => {
                 <p className="text-2xl font-semibold">{data.profile?.name}</p>
                 <p className="text-sm text-[var(--muted)]">{data.profile?.title}</p>
               </div>
-            </div>
+            </a>
 
             <div className="mt-6 rounded-2xl border border-slate-700/40 bg-slate-950/40 p-4 text-sm text-[var(--muted)]">
               {data.profile?.tagline}
@@ -362,15 +449,25 @@ const Web3PageDesktop = ({ section }) => {
               <p className="text-xs uppercase tracking-[0.2em] text-[var(--muted)]">
                 Stay connected
               </p>
-              {(data.socials || []).map((item) => (
-                <a key={item} className="block text-slate-200 hover:text-white" href="#">
-                  {item}
-                </a>
-              ))}
+              {(data.socials || []).map((item) => {
+                const label = typeof item === "string" ? item : item.label;
+                const href = typeof item === "string" ? "#" : item.href || "#";
+                return (
+                  <a
+                    key={label}
+                    className="block text-slate-200 hover:text-white"
+                    href={href}
+                    target={href.startsWith("http") ? "_blank" : undefined}
+                    rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
+                  >
+                    {label}
+                  </a>
+                );
+              })}
             </div>
           </aside>
 
-          <main className="flex-1 space-y-8">
+          <main className="flex-1 min-w-0 space-y-8">
             {!isSection && (
               <>
                 <section
@@ -400,21 +497,6 @@ const Web3PageDesktop = ({ section }) => {
                       Read the blog
                     </button>
                   </div>
-                </section>
-
-                <section className="grid gap-4 md:grid-cols-3">
-                  {(data.stats || []).map((item, index) => (
-                    <div
-                      key={item.label}
-                      className="web3-card reveal rounded-2xl px-5 py-4 text-sm"
-                      style={{ animationDelay: `${260 + index * 60}ms` }}
-                    >
-                      <p className="text-xs uppercase tracking-[0.18em] text-[var(--muted)]">
-                        {item.label}
-                      </p>
-                      <p className="mt-2 text-2xl font-semibold">{item.value}</p>
-                    </div>
-                  ))}
                 </section>
 
                 <section
@@ -452,46 +534,26 @@ const Web3PageDesktop = ({ section }) => {
                   </div>
                 </section>
 
-                <section className="grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
-                  <div
-                    className="web3-card reveal rounded-3xl p-8"
-                    style={{ animationDelay: "430ms" }}
-                  >
-                    <h2 className="text-2xl font-semibold">Latest writing</h2>
-                    <div className="mt-6 space-y-4">
-                      {(posts || []).map((post) => (
-                        <a
-                          key={post.title}
-                          href={post.link}
-                          className="flex flex-col gap-2 rounded-2xl border border-slate-700/40 bg-slate-950/40 p-4 transition hover:border-emerald-300/40 hover:bg-white/5"
-                        >
-                          <p className="text-lg font-medium">{post.title}</p>
-                          <div className="flex items-center gap-3 text-xs uppercase tracking-[0.18em] text-[var(--muted)]">
-                            <span>{post.date}</span>
-                            <span className="h-1 w-1 rounded-full bg-slate-600" />
-                            <span>{post.read}</span>
-                          </div>
-                        </a>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div
-                    className="web3-card reveal rounded-3xl p-8"
-                    style={{ animationDelay: "480ms" }}
-                  >
-                    <h2 className="text-2xl font-semibold">{data.newsletter?.title}</h2>
-                    <p className="mt-3 text-sm text-[var(--muted)]">{data.newsletter?.body}</p>
-                    <div className="mt-6 space-y-3">
-                      <input
-                        className="w-full rounded-2xl border border-slate-700/60 bg-slate-950/40 px-4 py-3 text-sm text-slate-100 placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-400/40"
-                        placeholder="Email address"
-                      />
-                      <button className="w-full rounded-2xl bg-gradient-to-r from-blue-400 to-emerald-300 px-4 py-3 text-sm font-semibold text-slate-900">
-                        {data.newsletter?.cta}
-                      </button>
-                      <p className="text-xs text-[var(--muted)]">{data.newsletter?.hint}</p>
-                    </div>
+                <section
+                  className="web3-card reveal rounded-3xl p-8"
+                  style={{ animationDelay: "430ms" }}
+                >
+                  <h2 className="text-2xl font-semibold">Latest writing</h2>
+                  <div className="mt-6 space-y-4">
+                    {(posts || []).map((post) => (
+                      <a
+                        key={post.title}
+                        href={resolveHref(post.link)}
+                        className="flex flex-col gap-2 rounded-2xl border border-slate-700/40 bg-slate-950/40 p-4 transition hover:border-emerald-300/40 hover:bg-white/5"
+                      >
+                        <p className="text-lg font-medium">{post.title}</p>
+                        <div className="flex items-center gap-3 text-xs uppercase tracking-[0.18em] text-[var(--muted)]">
+                          <span>{post.date}</span>
+                          <span className="h-1 w-1 rounded-full bg-slate-600" />
+                          <span>{post.read}</span>
+                        </div>
+                      </a>
+                    ))}
                   </div>
                 </section>
               </>
@@ -576,6 +638,93 @@ const Web3PageDesktop = ({ section }) => {
                       )}
                     </div>
                   </section>
+                ) : section === "projects" ? (
+                  <section
+                    className="web3-card reveal rounded-3xl p-8"
+                    style={{ animationDelay: "260ms" }}
+                  >
+                    <div className="flex items-center justify-end">
+                      <button
+                        onClick={toggleProjectAll}
+                        className="text-xs uppercase tracking-[0.18em] text-emerald-200 underline"
+                      >
+                        {expandedAll ? "Hide all" : "Show all"}
+                      </button>
+                    </div>
+
+                    <div className="mt-6 space-y-4">
+                      {projectList.map((proj) => (
+                        <div
+                          key={proj.id}
+                          className="rounded-2xl border border-slate-700/40 bg-slate-950/40 p-5 transition hover:border-slate-500/60"
+                          onClick={() => toggleProjectExpand(proj.id)}
+                        >
+                          {proj.link !== "#" ? (
+                            <a
+                              href={proj.link}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              onClick={(e) => e.stopPropagation()}
+                              className="text-lg font-semibold text-white underline hover:text-emerald-100"
+                            >
+                              {proj.title}
+                            </a>
+                          ) : (
+                            <h3 className="text-lg font-semibold text-white">{proj.title}</h3>
+                          )}
+
+                          {proj.date && (
+                            <p className="mt-1 text-xs uppercase tracking-[0.18em] text-[var(--muted)]">
+                              {proj.date}
+                            </p>
+                          )}
+                          {proj.description && (
+                            <p className="mt-3 text-sm text-[var(--muted)]">{proj.description}</p>
+                          )}
+
+                          {proj.expanded && (
+                            <div className="mt-4 border-t border-slate-700/40 pt-4 text-sm text-[var(--muted)] space-y-4">
+                              {proj.contributions && (
+                                <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                                  {proj.contributions}
+                                </ReactMarkdown>
+                              )}
+
+                              {proj.images.length > 0 && (
+                                <div className="grid gap-3 md:grid-cols-2">
+                                  {proj.images.map((img, idx) => {
+                                    const src = `${import.meta.env.BASE_URL}${img}`;
+                                    return (
+                                      <a
+                                        key={`${proj.id}-${idx}`}
+                                        href={src}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        onClick={(e) => e.stopPropagation()}
+                                        className="block"
+                                      >
+                                        <img
+                                          src={src}
+                                          alt={`${proj.title} ${idx + 1}`}
+                                          className="w-full rounded-xl border border-slate-700/40 bg-slate-950/40"
+                                          loading="lazy"
+                                        />
+                                      </a>
+                                    );
+                                  })}
+                                </div>
+                              )}
+                            </div>
+                          )}
+                        </div>
+                      ))}
+                      {projectList.length === 0 && (
+                        <p className="text-sm text-[var(--muted)]">
+                          No projects found in projects.md.
+                        </p>
+                      )}
+                    </div>
+                  </section>
                 ) : section === "experience" ? (
                   <section
                     className="web3-card reveal rounded-3xl p-8"
@@ -606,8 +755,8 @@ const Web3PageDesktop = ({ section }) => {
                             ? `calc(50% - ${barWidth}px - 18px)`
                             : `calc(50% + 18px)`;
                           const lineLeft = isStudy ? "calc(50% - 18px)" : "calc(50% + 18px)";
-                          const textWidth = 240;
-                          const lineLength = 280;
+                          const textWidth = 280;
+                          const lineLength = 320;
                           const barCenter = isStudy
                             ? `calc(50% - 18px - ${barWidth / 2}px)`
                             : `calc(50% + 18px + ${barWidth / 2}px)`;
