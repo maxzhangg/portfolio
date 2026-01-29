@@ -127,9 +127,10 @@ const Web3PageDesktop = ({ section, slug }) => {
       const contribIndex = lines.findIndex((l) =>
         l.toLowerCase().startsWith("**key contributions:**")
       );
-      const imagesLine = lines.find((l) =>
+      const imagesIndex = lines.findIndex((l) =>
         l.toLowerCase().startsWith("**images:**")
       );
+      const imagesLine = imagesIndex !== -1 ? lines[imagesIndex] : "";
       const images = imagesLine
         ? imagesLine
             .replace(/\*\*Images:\*\*\s*/i, "")
@@ -140,7 +141,13 @@ const Web3PageDesktop = ({ section, slug }) => {
 
       let contributions = "";
       if (contribIndex !== -1) {
-        contributions = lines.slice(contribIndex + 1).join("\n").trim();
+        const nextMetaIndex = lines.findIndex(
+          (line, idx) => idx > contribIndex && /^\*\*.+\*\*:/.test(line)
+        );
+        const endIndexCandidates = [imagesIndex, nextMetaIndex].filter((i) => i > contribIndex);
+        const endIndex =
+          endIndexCandidates.length > 0 ? Math.min(...endIndexCandidates) : lines.length;
+        contributions = lines.slice(contribIndex + 1, endIndex).join("\n").trim();
       }
 
       return {
@@ -801,7 +808,9 @@ const Web3PageDesktop = ({ section, slug }) => {
                                 }}
                               />
                               <div
-                                className="absolute h-2 w-2 rounded-full bg-emerald-300"
+                                className={`absolute h-2 w-2 rounded-full ${
+                                  isStudy ? "bg-emerald-300" : "bg-blue-400"
+                                }`}
                                 style={{
                                   top: "-3px",
                                   left: isStudy
