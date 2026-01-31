@@ -40,6 +40,7 @@ const Web3PageDesktop = ({ section, slug }) => {
   const [expandedAll, setExpandedAll] = useState(false);
   const [posts, setPosts] = useState(fallbackData.posts);
   const [experienceItems, setExperienceItems] = useState([]);
+  const [researchItems, setResearchItems] = useState([]);
   const [activeBlogIndex, setActiveBlogIndex] = useState(-1);
 
   useEffect(() => {
@@ -59,9 +60,13 @@ const Web3PageDesktop = ({ section, slug }) => {
       fetch(`${import.meta.env.BASE_URL}web3/experience.json`)
         .then((res) => (res.ok ? res.json() : Promise.reject(res.status)))
         .catch(() => []),
-    ]).then(([postsData, experienceData]) => {
+      fetch(`${import.meta.env.BASE_URL}web3/research.json`)
+        .then((res) => (res.ok ? res.json() : Promise.reject(res.status)))
+        .catch(() => []),
+    ]).then(([postsData, experienceData, researchData]) => {
       setPosts(postsData);
       setExperienceItems(experienceData);
+      setResearchItems(researchData);
     });
   }, []);
 
@@ -221,6 +226,10 @@ const Web3PageDesktop = ({ section, slug }) => {
       ? projectList
       : section === "blog"
       ? posts
+      : section === "research"
+      ? (Array.isArray(researchItems) && researchItems.length
+          ? researchItems
+          : sectionData?.items || [])
       : sectionData?.items || [];
   const featuredProjects = projectList.slice(0, 3);
 
@@ -890,6 +899,16 @@ const Web3PageDesktop = ({ section, slug }) => {
                           <p className="mt-2 text-sm text-[var(--muted)]">
                             {item.body || item.summary}
                           </p>
+                          {item.link && (
+                            <a
+                              href={item.link}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="mt-3 inline-flex items-center gap-2 text-sm font-medium text-emerald-200 underline hover:text-emerald-100"
+                            >
+                              View research notes
+                            </a>
+                          )}
                         </div>
                       ))}
                     </div>

@@ -59,21 +59,7 @@
     "research": {
       "badge": "Research",
       "title": "Explorations and questions",
-      "summary": "Early-stage explorations into how on-chain systems work and how people interact with them.",
-      "items": [
-        {
-          "title": "On-chain participation",
-          "meta": "Learning topic",
-          "read": "Draft",
-          "body": "Notes on why people participate in Web3 communities and what seems confusing at first glance."
-        },
-        {
-          "title": "Transaction understanding",
-          "meta": "UX Observation",
-          "read": "Draft",
-          "body": "Beginner observations on what makes transactions hard to understand before signing."
-        }
-      ]
+      "summary": "Early-stage explorations into how on-chain systems work and how people interact with them."
     },
     "experience": {
       "badge": "Experience",
