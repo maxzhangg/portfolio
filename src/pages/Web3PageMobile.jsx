@@ -22,7 +22,7 @@ const fallbackData = {
   socials: ["Newsletter", "Farcaster", "GitHub"],
 };
 
-const Web3PageMobile = ({ section }) => {
+const Web3PageMobile = ({ section, slug }) => {
   const [data, setData] = useState(fallbackData);
   const [projectContent, setProjectContent] = useState("");
   const [projectList, setProjectList] = useState([]);
@@ -79,6 +79,17 @@ const Web3PageMobile = ({ section }) => {
       setPosts(withContent);
     });
   }, [posts]);
+
+  useEffect(() => {
+    if (!Array.isArray(posts) || posts.length === 0) return;
+    setActiveBlogIndex(-1);
+  }, [posts]);
+
+  useEffect(() => {
+    if (section === "blog" && !slug) {
+      setActiveBlogIndex(-1);
+    }
+  }, [section, slug]);
 
   useEffect(() => {
     if (!projectContent) {
@@ -196,6 +207,12 @@ const Web3PageMobile = ({ section }) => {
           ? researchItems
           : sectionData?.items || [])
       : sectionData?.items || [];
+
+  useEffect(() => {
+    if (section !== "blog" || !slug) return;
+    const matchIndex = (posts || []).findIndex((post) => post.slug === slug);
+    setActiveBlogIndex(matchIndex >= 0 ? matchIndex : -1);
+  }, [section, slug, posts]);
 
   const now = new Date();
   const nowVal = Math.floor(
