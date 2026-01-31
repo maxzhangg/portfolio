@@ -1,5 +1,14 @@
 [
   {
+  "title": "Public Goods Funding in Web3: Gitcoin and Rekt News",
+  "titleLeft": "Public Goods Funding",
+  "slug": "gitcoin-rekt-public-goods",
+  "date": "Jan 29, 2026",
+  "link": "web3/blog/gitcoin-rekt-public-goods",
+  "summary": "A research note on how public goods are funded and sustained in Web3, with case studies on Gitcoin and Rekt News.",
+  "md": "web3/blog/2026-01-29-gitcoin-rekt-public-goods.md"
+},
+  {
     "title": "Solidity Basics: What I Learned as Beginner",
     "titleLeft": "Solidity Basics",
     "slug": "solidity-basics",
@@ -8,4 +17,6 @@
     "summary": "My first Solidity study notes — basic syntax and concepts, nothing deep yet.",
     "md": "web3/blog/2026-01-28-solidity-basics.md"
   }
+  
+
 ]
