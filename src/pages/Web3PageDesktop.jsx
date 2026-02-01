@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
@@ -32,6 +32,47 @@ const fallbackData = {
   },
   socials: ["Newsletter", "Farcaster", "GitHub"],
 };
+
+const Mermaid = ({ chart }) => {
+  const ref = useRef(null);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    const render = async () => {
+      const mermaid = (await import("mermaid")).default;
+      mermaid.initialize({
+        startOnLoad: false,
+        theme: "dark",
+        themeVariables: {
+          background: "transparent",
+          primaryColor: "#0f172a",
+          primaryTextColor: "#e2e8f0",
+          primaryBorderColor: "#334155",
+          lineColor: "#64748b",
+          secondaryColor: "#0b1220",
+          tertiaryColor: "#0b1220",
+          fontFamily: "Space Grotesk, Segoe UI, sans-serif",
+        },
+      });
+
+      const id = `mermaid-${Math.random().toString(36).slice(2)}`;
+      const { svg } = await mermaid.render(id, chart);
+      if (!cancelled && ref.current) {
+        ref.current.innerHTML = svg;
+      }
+    };
+
+    render();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [chart]);
+
+  return <div className="mermaid-block" ref={ref} />;
+};
+
 
 const Web3PageDesktop = ({ section, slug }) => {
   const [data, setData] = useState(fallbackData);
@@ -330,6 +371,10 @@ const Web3PageDesktop = ({ section, slug }) => {
       <a className="text-emerald-200 underline hover:text-emerald-100" {...props} />
     ),
     code: ({ inline, className, children, ...props }) => {
+      const isMermaid = !inline && className && className.includes("language-mermaid");
+      if (isMermaid) {
+        return <Mermaid chart={String(children).trim()} />;
+      }
       if (inline) {
         return (
           <code className="rounded bg-slate-900/70 px-1 py-0.5 text-emerald-200" {...props}>
@@ -338,7 +383,7 @@ const Web3PageDesktop = ({ section, slug }) => {
         );
       }
       return (
-        <pre className="mt-3 overflow-x-auto rounded-xl border border-slate-700/40 bg-slate-950/60 p-4 text-sm text-slate-100">
+        <pre className="mt-3 overflow-x-auto custom-scroll rounded-xl border border-slate-700/40 bg-slate-950/60 p-4 text-sm text-slate-100">
           <code className={className} {...props}>
             {children}
           </code>
@@ -346,7 +391,7 @@ const Web3PageDesktop = ({ section, slug }) => {
       );
     },
     img: ({ node, ...props }) => (
-      <img className="mt-3 w-full rounded-xl border border-slate-700/40" {...props} />
+      <img className="mt-3 w-full max-h-[420px] rounded-xl border border-slate-700/40 object-contain" {...props} />
     ),
     ul: ({ node, ...props }) => <ul className="mt-3 list-disc pl-5" {...props} />,
     ol: ({ node, ...props }) => <ol className="mt-3 list-decimal pl-5" {...props} />,
@@ -372,6 +417,47 @@ const Web3PageDesktop = ({ section, slug }) => {
           font-family: var(--font-sans);
           background: var(--bg);
         }
+
+
+        .mermaid-block {
+          margin-top: 16px;
+          overflow-x: auto;
+          border-radius: 16px;
+          border: 1px solid rgba(148, 163, 184, 0.2);
+          background: rgba(3, 7, 18, 0.7);
+          padding: 16px;
+        }
+
+        .mermaid-block svg {
+          width: 100%;
+          height: auto;
+        }
+
+        .web3-shell {
+          scrollbar-color: rgba(148, 163, 184, 0.6) rgba(12, 16, 28, 0.9);
+          scrollbar-width: thin;
+        }
+
+        .web3-shell ::-webkit-scrollbar {
+          width: 10px;
+          height: 10px;
+        }
+
+        .web3-shell ::-webkit-scrollbar-track {
+          background: rgba(12, 16, 28, 0.9);
+          border-radius: 999px;
+        }
+
+        .web3-shell ::-webkit-scrollbar-thumb {
+          background: linear-gradient(180deg, rgba(128, 183, 255, 0.75), rgba(126, 240, 216, 0.65));
+          border-radius: 999px;
+          border: 2px solid rgba(12, 16, 28, 0.9);
+        }
+
+        .web3-shell ::-webkit-scrollbar-thumb:hover {
+          background: linear-gradient(180deg, rgba(128, 183, 255, 0.95), rgba(126, 240, 216, 0.85));
+        }
+
 
         .web3-grid {
           background-image:
@@ -617,7 +703,7 @@ const Web3PageDesktop = ({ section, slug }) => {
                         className={`space-y-4 ${
                           activeBlogIndex === -1
                             ? ""
-                            : "max-h-[520px] overflow-y-auto pr-2"
+                            : "max-h-[520px] overflow-y-auto custom-scroll pr-2"
                         }`}
                       >
                         {(sectionItems || []).map((item, index) => (
@@ -644,7 +730,7 @@ const Web3PageDesktop = ({ section, slug }) => {
                       </div>
 
                       {sectionItems?.[activeBlogIndex] && (
-                        <div className="rounded-2xl border border-slate-700/40 bg-slate-950/40 p-6">
+                        <div className="rounded-2xl border border-slate-700/40 bg-slate-950/40 p-6 max-h-[520px] overflow-y-auto custom-scroll">
                           <>
                             <div className="flex items-center justify-between text-xs uppercase tracking-[0.18em] text-[var(--muted)]">
                               <span>{sectionItems[activeBlogIndex].date}</span>
@@ -704,7 +790,11 @@ const Web3PageDesktop = ({ section, slug }) => {
                             </p>
                           )}
                           {proj.description && (
-                            <p className="mt-3 text-sm text-[var(--muted)]">{proj.description}</p>
+                            <div className="mt-3 text-sm text-[var(--muted)]">
+                              <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                                {proj.description}
+                              </ReactMarkdown>
+                            </div>
                           )}
 
                           {proj.expanded && (

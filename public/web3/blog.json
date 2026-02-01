@@ -1,4 +1,12 @@
-[
+[{
+  "title": "Oracle's Choice: A SpoonOS Graph Agent for Divination + Chat",
+  "titleLeft": "Oracle's Choice",
+  "slug": "oracle-choice",
+  "date": "Feb 1, 2026",
+  "link": "web3/blog/oracle-choice",
+  "summary": "A dual‑mode oracle app built with SpoonOS Graph Agent: empathetic chat, forced divination, full trace transparency, and local deterministic draws.",
+  "md": "web3/blog/2026-02-01-oracle-choice.md"
+},
   {
   "title": "Public Goods Funding in Web3: Gitcoin and Rekt News",
   "titleLeft": "Public Goods Funding",

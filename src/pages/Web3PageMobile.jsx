@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
@@ -21,6 +21,47 @@ const fallbackData = {
   sections: {},
   socials: ["Newsletter", "Farcaster", "GitHub"],
 };
+
+const Mermaid = ({ chart }) => {
+  const ref = useRef(null);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    const render = async () => {
+      const mermaid = (await import("mermaid")).default;
+      mermaid.initialize({
+        startOnLoad: false,
+        theme: "dark",
+        themeVariables: {
+          background: "transparent",
+          primaryColor: "#0f172a",
+          primaryTextColor: "#e2e8f0",
+          primaryBorderColor: "#334155",
+          lineColor: "#64748b",
+          secondaryColor: "#0b1220",
+          tertiaryColor: "#0b1220",
+          fontFamily: "Space Grotesk, Segoe UI, sans-serif",
+        },
+      });
+
+      const id = `mermaid-${Math.random().toString(36).slice(2)}`;
+      const { svg } = await mermaid.render(id, chart);
+      if (!cancelled && ref.current) {
+        ref.current.innerHTML = svg;
+      }
+    };
+
+    render();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [chart]);
+
+  return <div className="mermaid-block" ref={ref} />;
+};
+
 
 const Web3PageMobile = ({ section, slug }) => {
   const [data, setData] = useState(fallbackData);
@@ -299,6 +340,10 @@ const Web3PageMobile = ({ section, slug }) => {
       <a className="text-emerald-200 underline hover:text-emerald-100" {...props} />
     ),
     code: ({ inline, className, children, ...props }) => {
+      const isMermaid = !inline && className && className.includes("language-mermaid");
+      if (isMermaid) {
+        return <Mermaid chart={String(children).trim()} />;
+      }
       if (inline) {
         return (
           <code className="rounded bg-slate-900/70 px-1 py-0.5 text-emerald-200" {...props}>
@@ -307,7 +352,7 @@ const Web3PageMobile = ({ section, slug }) => {
         );
       }
       return (
-        <pre className="mt-3 overflow-x-auto rounded-xl border border-slate-700/40 bg-slate-950/60 p-3 text-sm text-slate-100">
+        <pre className="mt-3 overflow-x-auto custom-scroll rounded-xl border border-slate-700/40 bg-slate-950/60 p-3 text-sm text-slate-100">
           <code className={className} {...props}>
             {children}
           </code>
@@ -315,7 +360,7 @@ const Web3PageMobile = ({ section, slug }) => {
       );
     },
     img: ({ node, ...props }) => (
-      <img className="mt-3 w-full rounded-xl border border-slate-700/40" {...props} />
+      <img className="mt-3 w-full max-h-[420px] rounded-xl border border-slate-700/40 object-contain" {...props} />
     ),
     ul: ({ node, ...props }) => <ul className="mt-3 list-disc pl-5" {...props} />,
     ol: ({ node, ...props }) => <ol className="mt-3 list-decimal pl-5" {...props} />,
@@ -336,6 +381,47 @@ const Web3PageMobile = ({ section, slug }) => {
           --muted: #a1a8bd;
           font-family: "Space Grotesk", "Segoe UI", sans-serif;
           background: var(--bg);
+        }
+
+
+        .mermaid-block {
+          margin-top: 16px;
+          overflow-x: auto;
+          border-radius: 16px;
+          border: 1px solid rgba(148, 163, 184, 0.2);
+          background: rgba(3, 7, 18, 0.7);
+          padding: 16px;
+        }
+
+        .mermaid-block svg {
+          width: 100%;
+          height: auto;
+        }
+
+
+        .custom-scroll {
+          scrollbar-color: rgba(128, 183, 255, 0.7) rgba(15, 20, 34, 0.9);
+          scrollbar-width: thin;
+        }
+
+        .custom-scroll::-webkit-scrollbar {
+          width: 10px;
+          height: 10px;
+        }
+
+        .custom-scroll::-webkit-scrollbar-track {
+          background: rgba(15, 20, 34, 0.9);
+          border-radius: 999px;
+        }
+
+        .custom-scroll::-webkit-scrollbar-thumb {
+          background: linear-gradient(180deg, rgba(128, 183, 255, 0.85), rgba(126, 240, 216, 0.75));
+          border-radius: 999px;
+          border: 2px solid rgba(15, 20, 34, 0.9);
+        }
+
+        .custom-scroll::-webkit-scrollbar-thumb:hover {
+          background: linear-gradient(180deg, rgba(128, 183, 255, 1), rgba(126, 240, 216, 0.9));
         }
       `}</style>
 
@@ -582,7 +668,11 @@ const Web3PageMobile = ({ section, slug }) => {
                       ) : (
                         <h3 className="mt-3 text-lg font-semibold text-white">{proj.title}</h3>
                       )}
-                      <p className="mt-2 text-sm text-[var(--muted)]">{proj.summary}</p>
+                      <div className="mt-2 text-sm text-[var(--muted)]">
+                        <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                          {proj.summary}
+                        </ReactMarkdown>
+                      </div>
 
                       {proj.expanded && (
                         <div className="mt-3 border-t border-slate-700/40 pt-3 text-sm text-[var(--muted)] space-y-3">

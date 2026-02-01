@@ -1,5 +1,4 @@
 
-
 ## Education
 
 **Master of Engineering, Electrical and Computer Engineering**  
@@ -45,6 +44,21 @@ Northeast Electric Power University, 2019–2023 | GPA: 87.2/100
 ---
 
 ## Projects
+
+### [Oracle's Choice](https://github.com/maxzhangg/Oracle-s-Choice)  
+**Date:** 2026.02 (Hackathon)  
+**Description:** Built a dual-mode oracle app powered by SpoonOS Graph Agent that supports empathetic chat and on-demand divination, with full traceability across the workflow (Input -> Processing -> Output).  
+**Images:** projects/oracle-s-choice/start.png, projects/oracle-s-choice/eat.png, projects/oracle-s-choice/exam.png  
+**Key Contributions:** 
+**Key Contributions:** 
+* **SpoonOS Graph Agent:** Built a deterministic StateGraph pipeline (parse -> route -> divination -> narration -> persist) to make the agent workflow explicit and traceable.  
+* **LLM Routing + Fallback:** Integrated SpoonOS LLM Manager with multi-provider routing and graceful fallbacks to keep intent/tone/tool classification reliable.  
+* **Local Divination Engine:** Implemented deterministic tarot/lenormand/liuyao draws for reproducible readings and easier debugging.  
+* **Contextual Chat Memory:** Added short-term memory (last 5 messages) to maintain coherent, empathetic conversation flow.  
+* **Trace Transparency UI:** Returned node-level trace data to the frontend so users can inspect how each response was produced.  
+* **Dual-Mode UX:** Designed and implemented a dedicated Divination trigger to override auto-intent when users want a direct reading.
+
+
 
 ### [WeOrganizer: AI-Driven B2B Content Aggregation Platform](https://ai.studio/apps/drive/1qK1Q2xgsjRjdyWyPRFvbSJ1XNgf4iD1I)  
 **Date:** 2026.01 (Design & Prototyping Phase)  

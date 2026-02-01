@@ -1,5 +1,18 @@
 ## Projects
 
+
+### [Oracle's Choice](https://github.com/maxzhangg/Oracle-s-Choice)
+**Date:** 2026.02 (Hackathon)
+**Type:** Web App
+**Tags:** SpoonOS, Graph Agent, LLM, Divination
+**Read:** MVP
+**Description:** Dual-mode oracle app built with [SpoonOS](https://spoonai.io/) Graph Agent, supporting empathetic chat or forced divination with full trace transparency.
+**Key Contributions:**
+- Designed and implemented the Graph Agent workflow (parse -> route -> divination -> narration -> persist).
+- Built a dual-mode UX with a dedicated Divination button and contextual chat memory.
+- Integrated multi-LLM routing with deterministic local draws and trace output.
+**Images:** projects/oracle-s-choice/start.png, projects/oracle-s-choice/eat.png, projects/oracle-s-choice/exam.png
+
 ### [WeOrganizer: AI-Driven B2B Content Aggregation](https://ai.studio/apps/drive/1qK1Q2xgsjRjdyWyPRFvbSJ1XNgf4iD1I)
 **Date:** 2026.01 (Design & Prototyping)
 **Type:** Web App
