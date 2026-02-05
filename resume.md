@@ -46,8 +46,8 @@ Northeast Electric Power University, 2019–2023 | GPA: 87.2/100
 ## Projects
 
 ### [Oracle's Choice](https://github.com/maxzhangg/Oracle-s-Choice)  
-**Date:** 2026.02 (Hackathon)  
-**Description:** Built a dual-mode oracle app powered by SpoonOS Graph Agent that supports empathetic chat and on-demand divination, with full traceability across the workflow (Input -> Processing -> Output).  
+**Date:** 2026.02 ([Third Prize](https://x.com/LXDAO_Official/status/2019009266594861098), SpoonOS Track in [SPARK AI Hackathon](https://github.com/CasualHackathon/SPARK-AI-Hackathon))  
+**Description:** Built a dual-mode oracle app powered by SpoonOS Graph Agent that supports empathetic chat and on-demand divination, with full traceability across the workflow (Input -> Processing -> Output). 
 **Images:** projects/oracle-s-choice/start.png, projects/oracle-s-choice/eat.png, projects/oracle-s-choice/exam.png  
 **Key Contributions:** 
 **Key Contributions:** 
