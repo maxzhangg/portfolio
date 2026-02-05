@@ -1,5 +1,7 @@
 # Gitcoin Grants: Funding Structure, QF Mechanics, and Round Design
 
+Full research: https://www.notion.so/lxdao/Gitcoin-2fedceffe40b801fb778df0fdeb1c382
+
 This post summarizes how Gitcoin funds public goods, how Quadratic Funding (QF) is engineered in practice, and how grant rounds evolved over time. It is based on Gitcoin’s official posts and public round summaries.
 
 ## 1) Funding Structure: A Multi-Source System
