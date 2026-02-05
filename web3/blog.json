@@ -1,4 +1,13 @@
 [{
+  "title": "Gitcoin Grants: Funding Structure, QF Mechanics, and Round Design",
+  "titleLeft": "Gitcoin Grants",
+  "slug": "gitcoin-funding-qf-rounds",
+  "date": "Feb 5, 2026",
+  "link": "web3/blog/gitcoin-funding-qf-rounds",
+  "summary": "A systems overview of Gitcoin’s funding structure, Quadratic Funding guardrails, and the evolution of round formats.",
+  "md": "web3/blog/2026-02-05-gitcoin-funding-qf-rounds.md"
+},
+{
   "title": "Foundry and Hardhat: Beginner Guide",
   "titleLeft": "Foundry and Hardhat",
   "slug": "foundry-and-hardhat-beginner-guide",
