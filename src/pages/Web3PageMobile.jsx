@@ -652,7 +652,22 @@ const Web3PageMobile = ({ section, slug }) => {
                       onClick={() => toggleProjectExpand(proj.id)}
                     >
                       <div className="flex items-center justify-between text-xs uppercase tracking-[0.18em] text-[var(--muted)]">
-                        <span>{proj.type || proj.date}</span>
+                        <span>
+                          <ReactMarkdown
+                            remarkPlugins={[remarkGfm]}
+                            components={{
+                              p: ({ node, ...props }) => <span {...props} />,
+                              a: ({ node, ...props }) => (
+                                <a
+                                  className="text-[var(--muted)] underline hover:text-emerald-100"
+                                  {...props}
+                                />
+                              ),
+                            }}
+                          >
+                            {proj.type || proj.date}
+                          </ReactMarkdown>
+                        </span>
                         <span className="font-mono">{proj.read}</span>
                       </div>
                       {proj.link !== "#" ? (

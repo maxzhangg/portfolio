@@ -193,7 +193,22 @@ const ResumePage = () => {
               <h3 className="text-lg font-semibold text-gray-800">{proj.title}</h3>
             )}
 
-            <p className="text-sm text-gray-500 mb-1">{proj.date}</p>
+            <p className="text-sm text-gray-500 mb-1">
+              <ReactMarkdown
+                remarkPlugins={[remarkGfm]}
+                components={{
+                  p: ({ node, ...props }) => <span {...props} />,
+                  a: ({ node, ...props }) => (
+                    <a
+                      className="text-gray-500 underline hover:text-blue-700"
+                      {...props}
+                    />
+                  ),
+                }}
+              >
+                {proj.date}
+              </ReactMarkdown>
+            </p>
             <p className="mb-2">{proj.description}</p>
             
             {proj.expanded && (

@@ -786,7 +786,20 @@ const Web3PageDesktop = ({ section, slug }) => {
 
                           {proj.date && (
                             <p className="mt-1 text-xs uppercase tracking-[0.18em] text-[var(--muted)]">
-                              {proj.date}
+                              <ReactMarkdown
+                                remarkPlugins={[remarkGfm]}
+                                components={{
+                                  p: ({ node, ...props }) => <span {...props} />,
+                                  a: ({ node, ...props }) => (
+                                    <a
+                                      className="text-[var(--muted)] underline hover:text-emerald-100"
+                                      {...props}
+                                    />
+                                  ),
+                                }}
+                              >
+                                {proj.date}
+                              </ReactMarkdown>
                             </p>
                           )}
                           {proj.description && (
