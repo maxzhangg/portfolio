@@ -2,7 +2,7 @@
 
 
 ### [Oracle's Choice](https://github.com/maxzhangg/Oracle-s-Choice)
-**Date:** 2026.02 (Hackathon)
+**Date:** 2026.02 ([Third Prize](https://x.com/LXDAO_Official/status/2019009266594861098), SpoonOS Track in [SPARK AI Hackathon](https://github.com/CasualHackathon/SPARK-AI-Hackathon))
 **Type:** Web App
 **Tags:** SpoonOS, Graph Agent, LLM, Divination
 **Read:** MVP
