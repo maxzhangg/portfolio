@@ -1,4 +1,13 @@
 [{
+  "title": "Foundry and Hardhat: Beginner Guide",
+  "titleLeft": "Foundry and Hardhat",
+  "slug": "foundry-and-hardhat-beginner-guide",
+  "date": "Feb 5, 2026",
+  "link": "web3/blog/foundry-and-hardhat-beginner-guide",
+  "summary": "A step-by-step local chain tutorial using Foundry (Anvil/Forge/Cast) and Hardhat (Network/Scripts/Console).",
+  "md": "web3/blog/2026-02-05-foundry-hardhat-beginner-guide.md"
+},
+{
   "title": "Oracle's Choice: A SpoonOS Graph Agent for Divination + Chat",
   "titleLeft": "Oracle's Choice",
   "slug": "oracle-choice",
