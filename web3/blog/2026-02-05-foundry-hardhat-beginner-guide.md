@@ -4,8 +4,6 @@ This post walks through two beginner-friendly ways to run a local blockchain and
 
 If you can follow terminal commands and copy/paste a few snippets, you are good.
 
----
-
 ## Part 1: Foundry (CLI-first)
 
 Think of Foundry as a text-based RPG toolkit:
@@ -94,8 +92,6 @@ Verify again:
 ```
 cast call <CONTRACT_ADDRESS> "number()" --rpc-url http://127.0.0.1:8545 | cast --to-dec
 ```
-
----
 
 ## Part 2: Hardhat (JavaScript-first)
 
@@ -202,16 +198,12 @@ await counter.number()
 
 Exit with `Ctrl + C` twice.
 
----
-
 ## Foundry vs Hardhat (when to choose)
 
 - **Foundry**: fastest for pure contract work and CLI experiments.
 - **Hardhat**: best if you are already comfortable with JavaScript and want to connect to frontends.
 
 My suggestion: learn Foundry first for the mental model, then use Hardhat for full-stack workflows.
-
----
 
 ## Quick Troubleshooting
 
@@ -225,7 +217,6 @@ Hardhat:
 - `ECONNREFUSED 127.0.0.1:8545` -> local node not running.
 - `ReferenceError: ethers is not defined` -> use `npx hardhat console`.
 
----
 
 ## Homework
 
