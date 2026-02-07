@@ -1,4 +1,13 @@
 [{
+  "title": "Quadratic Funding Revisited: A Mechanism Study of Octant",
+  "titleLeft": "Gas Optimization",
+  "slug": "quadratic-funding-revisited",
+  "date": "Feb 7, 2026",
+  "link": "web3/blog/quadratic-funding-revisited",
+  "summary": "A mechanism study of Octant showing how Quadratic Funding is redesigned through ETH yield redistribution and protocol-level constraints.",
+  "md": "web3/blog/2026-02-07-quadratic-funding-revisited.md"
+},
+{
   "title": "Gas Optimization in Practice: A Small but Real Improvement (Remix Test)",
   "titleLeft": "Gas Optimization",
   "slug": "gas-optimization-remix-case",
