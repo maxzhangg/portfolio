@@ -1,4 +1,13 @@
 [{
+  "title": "Gas Optimization in Practice: A Small but Real Improvement (Remix Test)",
+  "titleLeft": "Gas Optimization",
+  "slug": "gas-optimization-remix-case",
+  "date": "Feb 7, 2026",
+  "link": "web3/blog/gas-optimization-remix-case",
+  "summary": "A Remix-tested comparison between unoptimized and optimized versions of a high-frequency reward distribution function.",
+  "md": "web3/blog/2026-02-07-gas-optimization-remix-case.md"
+},
+{
   "title": "Gitcoin Grants: Funding Structure, QF Mechanics, and Round Design",
   "titleLeft": "Gitcoin Grants",
   "slug": "gitcoin-funding-qf-rounds",
