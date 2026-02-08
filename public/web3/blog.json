@@ -1,66 +1,74 @@
-[{
-  "title": "Quadratic Funding Revisited: A Mechanism Study of Octant",
-  "titleLeft": "Gas Optimization",
-  "slug": "quadratic-funding-revisited",
-  "date": "Feb 7, 2026",
-  "link": "web3/blog/quadratic-funding-revisited",
-  "summary": "A mechanism study of Octant showing how Quadratic Funding is redesigned through ETH yield redistribution and protocol-level constraints.",
-  "md": "web3/blog/2026-02-07-quadratic-funding-revisited.md"
-},
-{
-  "title": "Gas Optimization in Practice: A Small but Real Improvement (Remix Test)",
-  "titleLeft": "Gas Optimization",
-  "slug": "gas-optimization-remix-case",
-  "date": "Feb 7, 2026",
-  "link": "web3/blog/gas-optimization-remix-case",
-  "summary": "A Remix-tested comparison between unoptimized and optimized versions of a high-frequency reward distribution function.",
-  "md": "web3/blog/2026-02-07-gas-optimization-remix-case.md"
-},
-{
-  "title": "Gitcoin Grants: Funding Structure, QF Mechanics, and Round Design",
-  "titleLeft": "Gitcoin Grants",
-  "slug": "gitcoin-funding-qf-rounds",
-  "date": "Feb 5, 2026",
-  "link": "web3/blog/gitcoin-funding-qf-rounds",
-  "summary": "A systems overview of Gitcoin’s funding structure, Quadratic Funding guardrails, and the evolution of round formats.",
-  "md": "web3/blog/2026-02-05-gitcoin-funding-qf-rounds.md"
-},
-{
-  "title": "Foundry and Hardhat: Beginner Guide",
-  "titleLeft": "Foundry and Hardhat",
-  "slug": "foundry-and-hardhat-beginner-guide",
-  "date": "Feb 5, 2026",
-  "link": "web3/blog/foundry-and-hardhat-beginner-guide",
-  "summary": "A step-by-step local chain tutorial using Foundry (Anvil/Forge/Cast) and Hardhat (Network/Scripts/Console).",
-  "md": "web3/blog/2026-02-05-foundry-hardhat-beginner-guide.md"
-},
-{
-  "title": "Oracle's Choice: A SpoonOS Graph Agent for Divination + Chat",
-  "titleLeft": "Oracle's Choice",
-  "slug": "oracle-choice",
-  "date": "Feb 1, 2026",
-  "link": "web3/blog/oracle-choice",
-  "summary": "A dual‑mode oracle app built with SpoonOS Graph Agent: empathetic chat, forced divination, full trace transparency, and local deterministic draws.",
-  "md": "web3/blog/2026-02-01-oracle-choice.md"
-},
-  {
-  "title": "Public Goods Funding in Web3: Gitcoin and Rekt News",
-  "titleLeft": "Public Goods Funding",
-  "slug": "gitcoin-rekt-public-goods",
-  "date": "Jan 29, 2026",
-  "link": "web3/blog/gitcoin-rekt-public-goods",
-  "summary": "A research note on how public goods are funded and sustained in Web3, with case studies on Gitcoin and Rekt News.",
-  "md": "web3/blog/2026-01-29-gitcoin-rekt-public-goods.md"
-},
-  {
-    "title": "Solidity Basics: What I Learned as Beginner",
-    "titleLeft": "Solidity Basics",
-    "slug": "solidity-basics",
-    "date": "Jan 28, 2026",
-    "link": "web3/blog/solidity-basics",
-    "summary": "My first Solidity study notes — basic syntax and concepts, nothing deep yet.",
-    "md": "web3/blog/2026-01-28-solidity-basics.md"
-  }
-  
-
+﻿[
+    {
+        "title":  "Building a Simple DApp on Sepolia and Vercel",
+        "titleLeft":  "Simple DApp",
+        "slug":  "simple-dapp-sepolia-vercel",
+        "date":  "Feb 8, 2026",
+        "link":  "web3/blog/simple-dapp-sepolia-vercel",
+        "summary":  "An end-to-end build log of a minimal DApp: Solidity contract deployment to Sepolia, Next.js + viem integration, and Vercel launch.",
+        "md":  "web3/blog/2026-02-08-simple-dapp-sepolia-vercel.md"
+    },
+    {
+        "title":  "Quadratic Funding Revisited: A Mechanism Study of Octant",
+        "titleLeft":  "Gas Optimization",
+        "slug":  "quadratic-funding-revisited",
+        "date":  "Feb 7, 2026",
+        "link":  "web3/blog/quadratic-funding-revisited",
+        "summary":  "A mechanism study of Octant showing how Quadratic Funding is redesigned through ETH yield redistribution and protocol-level constraints.",
+        "md":  "web3/blog/2026-02-07-quadratic-funding-revisited.md"
+    },
+    {
+        "title":  "Gas Optimization in Practice: A Small but Real Improvement (Remix Test)",
+        "titleLeft":  "Gas Optimization",
+        "slug":  "gas-optimization-remix-case",
+        "date":  "Feb 7, 2026",
+        "link":  "web3/blog/gas-optimization-remix-case",
+        "summary":  "A Remix-tested comparison between unoptimized and optimized versions of a high-frequency reward distribution function.",
+        "md":  "web3/blog/2026-02-07-gas-optimization-remix-case.md"
+    },
+    {
+        "title":  "Gitcoin Grants: Funding Structure, QF Mechanics, and Round Design",
+        "titleLeft":  "Gitcoin Grants",
+        "slug":  "gitcoin-funding-qf-rounds",
+        "date":  "Feb 5, 2026",
+        "link":  "web3/blog/gitcoin-funding-qf-rounds",
+        "summary":  "A systems overview of Gitcoinâ€™s funding structure, Quadratic Funding guardrails, and the evolution of round formats.",
+        "md":  "web3/blog/2026-02-05-gitcoin-funding-qf-rounds.md"
+    },
+    {
+        "title":  "Foundry and Hardhat: Beginner Guide",
+        "titleLeft":  "Foundry and Hardhat",
+        "slug":  "foundry-and-hardhat-beginner-guide",
+        "date":  "Feb 5, 2026",
+        "link":  "web3/blog/foundry-and-hardhat-beginner-guide",
+        "summary":  "A step-by-step local chain tutorial using Foundry (Anvil/Forge/Cast) and Hardhat (Network/Scripts/Console).",
+        "md":  "web3/blog/2026-02-05-foundry-hardhat-beginner-guide.md"
+    },
+    {
+        "title":  "Oracle\u0027s Choice: A SpoonOS Graph Agent for Divination + Chat",
+        "titleLeft":  "Oracle\u0027s Choice",
+        "slug":  "oracle-choice",
+        "date":  "Feb 1, 2026",
+        "link":  "web3/blog/oracle-choice",
+        "summary":  "A dualâ€‘mode oracle app built with SpoonOS Graph Agent: empathetic chat, forced divination, full trace transparency, and local deterministic draws.",
+        "md":  "web3/blog/2026-02-01-oracle-choice.md"
+    },
+    {
+        "title":  "Public Goods Funding in Web3: Gitcoin and Rekt News",
+        "titleLeft":  "Public Goods Funding",
+        "slug":  "gitcoin-rekt-public-goods",
+        "date":  "Jan 29, 2026",
+        "link":  "web3/blog/gitcoin-rekt-public-goods",
+        "summary":  "A research note on how public goods are funded and sustained in Web3, with case studies on Gitcoin and Rekt News.",
+        "md":  "web3/blog/2026-01-29-gitcoin-rekt-public-goods.md"
+    },
+    {
+        "title":  "Solidity Basics: What I Learned as Beginner",
+        "titleLeft":  "Solidity Basics",
+        "slug":  "solidity-basics",
+        "date":  "Jan 28, 2026",
+        "link":  "web3/blog/solidity-basics",
+        "summary":  "My first Solidity study notes â€” basic syntax and concepts, nothing deep yet.",
+        "md":  "web3/blog/2026-01-28-solidity-basics.md"
+    }
 ]
