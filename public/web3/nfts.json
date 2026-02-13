@@ -1,0 +1,42 @@
+[
+  {
+    "title": "Web3 Career Build Certificate #1",
+    "network": "optimism",
+    "rpcUrl": "https://opt-mainnet.g.alchemy.com/v2/oBEqUoZMFSYHUy1SVL5ZW",
+    "contractAddress": "0x8f4c2c84bB47670D15c17c7C60f29c97dCF00b0b",
+    "tokenId": "1",
+    "description": "ERC-1155 credential NFT on OP Mainnet. Used as on-chain proof of participation and completion.",
+    "image": "",
+    "txLink": ""
+  },
+  {
+    "title": "Web3 Career Build Certificate #94",
+    "network": "optimism",
+    "rpcUrl": "https://opt-mainnet.g.alchemy.com/v2/oBEqUoZMFSYHUy1SVL5ZW",
+    "contractAddress": "0x8f4c2c84bB47670D15c17c7C60f29c97dCF00b0b",
+    "tokenId": "94",
+    "description": "ERC-1155 credential NFT on OP Mainnet from the same collection contract.",
+    "image": "",
+    "txLink": ""
+  },
+  {
+    "title": "Web3 Career Build Certificate #113",
+    "network": "optimism",
+    "rpcUrl": "https://opt-mainnet.g.alchemy.com/v2/oBEqUoZMFSYHUy1SVL5ZW",
+    "contractAddress": "0x8f4c2c84bB47670D15c17c7C60f29c97dCF00b0b",
+    "tokenId": "113",
+    "description": "ERC-1155 credential NFT on OP Mainnet from the same collection contract.",
+    "image": "",
+    "txLink": ""
+  },
+  {
+    "title": "Web3 Career Build Certificate #6",
+    "network": "ethereum",
+    "rpcUrl": "https://eth-mainnet.g.alchemy.com/v2/oBEqUoZMFSYHUy1SVL5ZW",
+    "contractAddress": "0x882af4d06216947ad2c35c5be3f26c6668e8148d",
+    "tokenId": "6",
+    "description": "ERC-721 certificate NFT on Ethereum mainnet. Mint transaction is linked below.",
+    "image": "",
+    "txLink": "https://etherscan.io/tx/0x5f892884c34b0319fab3ba98c28ac8cd3d9b3d60217a56d2febaed5dd4e53ff7"
+  }
+]

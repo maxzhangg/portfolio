@@ -71,7 +71,44 @@ const Web3PageMobile = ({ section, slug }) => {
   const [posts, setPosts] = useState(fallbackData.posts || []);
   const [experienceItems, setExperienceItems] = useState([]);
   const [researchItems, setResearchItems] = useState([]);
+  const [nftItems, setNftItems] = useState([]);
   const [activeBlogIndex, setActiveBlogIndex] = useState(-1);
+
+  const enrichNftItemFromAlchemy = async (item) => {
+    if (!item?.rpcUrl || !item?.contractAddress || item?.tokenId === undefined || item?.tokenId === null) {
+      return item;
+    }
+    const match = String(item.rpcUrl).match(/^(https:\/\/[^/]+)\/v2\/([^/?#]+)/i);
+    if (!match) return item;
+    const host = match[1];
+    const apiKey = match[2];
+    const qs = new URLSearchParams({
+      contractAddress: item.contractAddress,
+      tokenId: String(item.tokenId),
+      refreshCache: "false",
+    });
+    const url = `${host}/nft/v3/${apiKey}/getNFTMetadata?${qs.toString()}`;
+    try {
+      const res = await fetch(url);
+      if (!res.ok) return item;
+      const json = await res.json();
+      const image =
+        json?.image?.cachedUrl ||
+        json?.image?.pngUrl ||
+        json?.image?.thumbnailUrl ||
+        json?.image?.originalUrl ||
+        item.image ||
+        "";
+      return {
+        ...item,
+        title: json?.name || item.title,
+        description: json?.description || item.description,
+        image,
+      };
+    } catch {
+      return item;
+    }
+  };
 
   useEffect(() => {
     fetch(`${import.meta.env.BASE_URL}web3/web3-data.json`)
@@ -91,10 +128,16 @@ const Web3PageMobile = ({ section, slug }) => {
       fetch(`${import.meta.env.BASE_URL}web3/research.json`)
         .then((res) => (res.ok ? res.json() : Promise.reject(res.status)))
         .catch(() => []),
-    ]).then(([postsData, experienceData, researchData]) => {
+      fetch(`${import.meta.env.BASE_URL}web3/nfts.json`)
+        .then((res) => (res.ok ? res.json() : Promise.reject(res.status)))
+        .catch(() => []),
+    ]).then(async ([postsData, experienceData, researchData, nftsData]) => {
       setPosts(postsData);
       setExperienceItems(experienceData);
       setResearchItems(researchData);
+      const nftList = Array.isArray(nftsData) ? nftsData : [];
+      const enrichedNfts = await Promise.all(nftList.map((item) => enrichNftItemFromAlchemy(item)));
+      setNftItems(enrichedNfts);
     });
   }, []);
 
@@ -244,6 +287,10 @@ const Web3PageMobile = ({ section, slug }) => {
       ? projectList
       : resolvedSection === "blog"
       ? posts
+      : resolvedSection === "nfts"
+      ? (Array.isArray(nftItems) && nftItems.length
+          ? nftItems
+          : sectionData?.items || [])
       : resolvedSection === "research"
       ? (Array.isArray(researchItems) && researchItems.length
           ? researchItems
@@ -367,6 +414,36 @@ const Web3PageMobile = ({ section, slug }) => {
     ol: ({ node, ...props }) => <ol className="mt-3 list-decimal pl-5" {...props} />,
     li: ({ node, ...props }) => <li className="mb-1" {...props} />,
     p: ({ node, ...props }) => <p className="mt-3 leading-relaxed" {...props} />,
+  };
+
+  const explorerBaseByNetwork = {
+    ethereum: "https://etherscan.io",
+    sepolia: "https://sepolia.etherscan.io",
+    holesky: "https://holesky.etherscan.io",
+    polygon: "https://polygonscan.com",
+    mumbai: "https://mumbai.polygonscan.com",
+    arbitrum: "https://arbiscan.io",
+    "arbitrum-sepolia": "https://sepolia.arbiscan.io",
+    optimism: "https://optimistic.etherscan.io",
+    "optimism-sepolia": "https://sepolia-optimism.etherscan.io",
+    base: "https://basescan.org",
+    "base-sepolia": "https://sepolia.basescan.org",
+    bsc: "https://bscscan.com",
+    "bsc-testnet": "https://testnet.bscscan.com",
+  };
+
+  const getNftLinks = (item) => {
+    const networkKey = (item?.network || "ethereum").toLowerCase();
+    const base = explorerBaseByNetwork[networkKey] || explorerBaseByNetwork.ethereum;
+    const contract = item?.contractAddress;
+    const tokenId = item?.tokenId;
+    const txLink = item?.txLink || null;
+    const contractLink = contract ? `${base}/address/${contract}` : null;
+    const tokenLink =
+      contract && tokenId !== undefined && tokenId !== null
+        ? `${base}/token/${contract}?a=${tokenId}`
+        : null;
+    return { txLink, contractLink, tokenLink };
   };
 
 
@@ -599,6 +676,47 @@ const Web3PageMobile = ({ section, slug }) => {
                         </div>
                       );
                     })}
+                  </div>
+                </section>
+              ) : section === "nfts" ? (
+                <section>
+                  <div className="grid grid-cols-2 gap-3">
+                  {(sectionItems || []).map((item, index) => {
+                    const imageSrc = item.image
+                      ? item.image.startsWith("http")
+                        ? item.image
+                        : `${import.meta.env.BASE_URL}${item.image}`
+                      : "";
+                    const links = getNftLinks(item);
+                    const href = links.tokenLink || links.txLink || links.contractLink || "#";
+                    return (
+                      <a
+                        key={`${item.contractAddress || "nft"}-${item.tokenId || index}`}
+                        href={href}
+                        target={href.startsWith("http") ? "_blank" : undefined}
+                        rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
+                        className="group rounded-2xl border border-slate-700/40 bg-slate-950/50 p-2"
+                      >
+                        <div className="aspect-[3/4] overflow-hidden rounded-xl border border-slate-700/40 bg-slate-900/60">
+                          {imageSrc ? (
+                            <img
+                              src={imageSrc}
+                              alt={item.title || `NFT ${item.tokenId ?? ""}`.trim()}
+                              className="h-full w-full object-contain p-2 transition duration-300 group-hover:scale-[1.01]"
+                              loading="lazy"
+                            />
+                          ) : (
+                            <div className="flex h-full items-center justify-center text-xs uppercase tracking-[0.2em] text-slate-500">
+                              NFT
+                            </div>
+                          )}
+                        </div>
+                        <p className="mt-2 truncate text-sm font-semibold text-white">
+                          {item.title || `NFT #${item.tokenId ?? ""}`.trim()}
+                        </p>
+                      </a>
+                    );
+                  })}
                   </div>
                 </section>
               ) : section === "certificate" ? (
