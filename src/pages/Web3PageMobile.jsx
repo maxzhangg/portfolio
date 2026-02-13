@@ -236,14 +236,15 @@ const Web3PageMobile = ({ section, slug }) => {
     return `${resolvedBase}#${path}`;
   };
 
-  const sectionData = data.sections?.[section];
+  const resolvedSection = section === "about" ? "" : section;
+  const sectionData = data.sections?.[resolvedSection];
   const isSection = Boolean(sectionData);
   const sectionItems =
-    section === "projects"
+    resolvedSection === "projects"
       ? projectList
-      : section === "blog"
+      : resolvedSection === "blog"
       ? posts
-      : section === "research"
+      : resolvedSection === "research"
       ? (Array.isArray(researchItems) && researchItems.length
           ? researchItems
           : sectionData?.items || [])
@@ -599,6 +600,68 @@ const Web3PageMobile = ({ section, slug }) => {
                       );
                     })}
                   </div>
+                </section>
+              ) : section === "certificate" ? (
+                <section className="space-y-4">
+                  {(sectionItems || []).map((item) => {
+                    const imageSrc = item.image
+                      ? item.image.startsWith("http")
+                        ? item.image
+                        : `${import.meta.env.BASE_URL}${item.image}`
+                      : "";
+                    return (
+                      <div
+                        key={item.title}
+                        className="rounded-2xl border border-slate-700/40 bg-slate-950/50 p-5"
+                      >
+                        <div className="flex items-center justify-between text-xs uppercase tracking-[0.18em] text-[var(--muted)]">
+                          <span>{item.meta || "Credential"}</span>
+                          <span className="font-mono">{item.read || "Verified"}</span>
+                        </div>
+                        <h3 className="mt-3 text-lg font-semibold text-white">{item.title}</h3>
+                        <p className="mt-2 text-sm text-[var(--muted)]">
+                          {item.body || item.summary}
+                        </p>
+                        {imageSrc && (
+                          <a
+                            href={item.txLink || imageSrc}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="mt-4 block"
+                          >
+                            <img
+                              src={imageSrc}
+                              alt={item.title}
+                              className="w-full rounded-xl border border-slate-700/40 bg-slate-950/40"
+                              loading="lazy"
+                            />
+                          </a>
+                        )}
+                        <div className="mt-4 flex flex-col gap-2 text-sm">
+                          {item.txLink && (
+                            <a
+                              href={item.txLink}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="font-medium text-emerald-200 underline hover:text-emerald-100"
+                            >
+                              View transaction proof
+                            </a>
+                          )}
+                          {item.link && (
+                            <a
+                              href={item.link}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="font-medium text-emerald-200 underline hover:text-emerald-100"
+                            >
+                              View credential details
+                            </a>
+                          )}
+                        </div>
+                      </div>
+                    );
+                  })}
                 </section>
               ) : section === "blog" ? (
                 <section className="space-y-4">
