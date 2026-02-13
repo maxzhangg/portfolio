@@ -9,6 +9,7 @@
     { "label": "Projects", "href": "web3/projects" },
     { "label": "Blog", "href": "web3/blog" },
     { "label": "Experience", "href": "web3/experience" },
+    { "label": "Certificate", "href": "web3/certificate" },
     { "label": "Research", "href": "web3/research" }
   ],
   "stats": [
@@ -65,6 +66,21 @@
       "badge": "Experience",
       "title": "Learning + Background",
       "summary": "A brief timeline of my education, technical background, and current Web3 learning path."
+    },
+    "certificate": {
+      "badge": "Certificate",
+      "title": "Credential and Proof",
+      "summary": "A verifiable completion certificate from my Web3 internship learning track.",
+      "items": [
+        {
+          "title": "Web3 Internship Bootcamp Completion Certificate",
+          "meta": "Credential",
+          "read": "Verified",
+          "body": "Completion certificate for the Web3 internship bootcamp. The transaction hash below provides on-chain verification.",
+          "image": "web3/resources/web3-internship-bootcamp-certificate.svg",
+          "txLink": "https://etherscan.io/tx/0x5f892884c34b0319fab3ba98c28ac8cd3d9b3d60217a56d2febaed5dd4e53ff7"
+        }
+      ]
     }
   }
 }
