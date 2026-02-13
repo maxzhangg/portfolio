@@ -7,6 +7,7 @@
   "nav": [
     { "label": "About", "href": "web3/about" },
     { "label": "Projects", "href": "web3/projects" },
+    { "label": "NFTs", "href": "web3/nfts" },
     { "label": "Blog", "href": "web3/blog" },
     { "label": "Experience", "href": "web3/experience" },
     { "label": "Certificate", "href": "web3/certificate" },
@@ -51,6 +52,19 @@
       "badge": "Projects",
       "title": "Learning experiments",
       "summary": "Small projects and demos built while learning Web3 and related tools."
+    },
+    "nfts": {
+      "badge": "NFTs",
+      "title": "NFT Exploration",
+      "summary": "A space for NFT experiments, collections, and on-chain visual ideas.",
+      "items": [
+        {
+          "title": "NFTs coming soon",
+          "meta": "In progress",
+          "read": "Update",
+          "body": "I am preparing this section with NFT-related experiments and collection notes."
+        }
+      ]
     },
     "blog": {
       "badge": "Blog",
