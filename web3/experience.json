@@ -1,5 +1,14 @@
 [
   {
+    "type": "work",
+    "title": "QA",
+    "organization": "WEEX",
+    "description": "TBD",
+    "link": "https://www.weex.com/",
+    "startDate": "2026-03-09",
+    "endDate": "present"
+  },
+  {
     "type": "study",
     "title": "Web3 Internship Bootcamp · Learner",
     "organization": "Web3 Internship Bootcamp",
