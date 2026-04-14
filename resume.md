@@ -11,6 +11,14 @@ Northeast Electric Power University, 2019–2023 | GPA: 87.2/100
 
 ## Experience
 
+**QA Tester**, Weex Global, Remote  
+*Mar 2026 – Present*
+
+- Tested a data warehouse–driven risk control dashboard for withdrawal analysis, ensuring accuracy of key financial metrics and reports.
+- Validated data consistency using advanced SQL (joins, aggregations, window functions) to reconcile dashboard metrics with source tables.
+- Leveraged AI-assisted tools (Codex) to develop Playwright automation scripts, improving test efficiency and coverage.
+- Designed edge-case and dirty data scenarios, and identified and reported **26** defects through debugging and cross-team collaboration.
+
 **Service Router Test Platform Dev Student**, Nokia, Ottawa  
 *Apr 2024 – Dec 2024*
 
@@ -45,6 +53,19 @@ Northeast Electric Power University, 2019–2023 | GPA: 87.2/100
 
 ## Projects
 
+
+### [WeOrganizer: AI-Driven B2B Content Aggregation Platform](https://ai.studio/apps/drive/1qK1Q2xgsjRjdyWyPRFvbSJ1XNgf4iD1I)  
+**Date:** 2026.01 - present
+**Description:** Conceptualized and designed a B2B SaaS solution that automates the extraction, analysis, and distribution of WeChat Official Account content, enabling Account Managers to deliver personalized market intelligence to clients efficiently.  
+**Images:** projects/wechat-gzh-organizer/1.png, projects/wechat-gzh-organizer/2.png, projects/wechat-gzh-organizer/3.png, projects/wechat-gzh-organizer/4.png  
+**Key Contributions:** 
+* **Product Strategy (0-1):** Defined the product vision and development roadmap, identifying the critical pain point of manual content filtering in B2B sales and proposing an automated "Extract-Analyze-Push" workflow.  
+* **AI Application Design:** Architected the functional logic for a dual-model AI system: utilizing **NLP** for structural extraction (keywords/titles) and a **Supervised Learning** model to predict client-article relevance based on historical interaction data.  
+* **GenAI Integration:** Designed the "Smart Push" feature, outlining the prompt engineering requirements for LLMs to transform structured JSON data into context-aware, personalized client outreach messages (Email/WeChat).  
+* **System Logic & Data Modeling:** Defined the technical specifications and data structures (JSON schemas) for article processing, ensuring seamless data flow between the crawler, the analysis engine, and the frontend dashboard.  
+* **UX/UI Prototyping:** Created high-fidelity interactive prototypes and user journey maps to visualize the information architecture, focusing on reducing the cognitive load for managers handling high-volume information streams.  
+* **Requirement Management:** Translated complex algorithmic concepts into actionable Product Requirement Documents (PRD), bridging the gap between business needs (client engagement) and technical implementation (machine learning feasibility).  
+
 ### [Oracle's Choice](https://github.com/maxzhangg/Oracle-s-Choice)  
 **Date:** 2026.02 ([Third Prize](https://x.com/LXDAO_Official/status/2019009266594861098), SpoonOS Track in [SPARK AI Hackathon](https://github.com/CasualHackathon/SPARK-AI-Hackathon))  
 **Description:** Built a dual-mode oracle app powered by SpoonOS Graph Agent that supports empathetic chat and on-demand divination, with full traceability across the workflow (Input -> Processing -> Output). 
@@ -60,17 +81,6 @@ Northeast Electric Power University, 2019–2023 | GPA: 87.2/100
 
 
 
-### [WeOrganizer: AI-Driven B2B Content Aggregation Platform](https://ai.studio/apps/drive/1qK1Q2xgsjRjdyWyPRFvbSJ1XNgf4iD1I)  
-**Date:** 2026.01 (Design & Prototyping Phase)  
-**Description:** Conceptualized and designed a B2B SaaS solution that automates the extraction, analysis, and distribution of WeChat Official Account content, enabling Account Managers to deliver personalized market intelligence to clients efficiently.  
-**Images:** projects/wechat-gzh-organizer/1.png, projects/wechat-gzh-organizer/2.png, projects/wechat-gzh-organizer/3.png, projects/wechat-gzh-organizer/4.png  
-**Key Contributions:** 
-* **Product Strategy (0-1):** Defined the product vision and development roadmap, identifying the critical pain point of manual content filtering in B2B sales and proposing an automated "Extract-Analyze-Push" workflow.  
-* **AI Application Design:** Architected the functional logic for a dual-model AI system: utilizing **NLP** for structural extraction (keywords/titles) and a **Supervised Learning** model to predict client-article relevance based on historical interaction data.  
-* **GenAI Integration:** Designed the "Smart Push" feature, outlining the prompt engineering requirements for LLMs to transform structured JSON data into context-aware, personalized client outreach messages (Email/WeChat).  
-* **System Logic & Data Modeling:** Defined the technical specifications and data structures (JSON schemas) for article processing, ensuring seamless data flow between the crawler, the analysis engine, and the frontend dashboard.  
-* **UX/UI Prototyping:** Created high-fidelity interactive prototypes and user journey maps to visualize the information architecture, focusing on reducing the cognitive load for managers handling high-volume information streams.  
-* **Requirement Management:** Translated complex algorithmic concepts into actionable Product Requirement Documents (PRD), bridging the gap between business needs (client engagement) and technical implementation (machine learning feasibility).  
 
 ### [Relationship K-Line: AI-Powered Astrology Compatibility Visualization](https://maxzhangg.github.io/relationship-k-line/)  
 **Date:** 2026.01  
