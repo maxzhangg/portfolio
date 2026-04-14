@@ -166,6 +166,18 @@ const ResumePage = () => {
     );
   };
 
+  const handleProjectSummaryKeyDown = (event, id) => {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      toggleExpand(id);
+    }
+  };
+
+  const handleOpenProject = (event, link) => {
+    event.stopPropagation();
+    window.open(link, "_blank", "noopener,noreferrer");
+  };
+
   const mainMarkdownComponents = {
     h2: ({ node, ...props }) => (
       <h2
@@ -425,61 +437,81 @@ const ResumePage = () => {
                   key={project.id}
                   className="rounded-[18px] border border-[#e3ddd4] bg-white p-3 transition duration-200 hover:border-[#c8beb1]"
                 >
-                  <div className="flex items-start justify-between gap-3">
-                    <div className="min-w-0">
-                      {project.link !== "#" ? (
-                        <a
-                          href={project.link}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="group inline-block"
-                        >
-                          <h3 className="text-[0.98rem] font-semibold tracking-[-0.02em] text-[#1a1916] transition group-hover:text-[#0f5e4f]">
+                  <div
+                    role="button"
+                    tabIndex={0}
+                    aria-expanded={project.expanded}
+                    onClick={() => toggleExpand(project.id)}
+                    onKeyDown={(event) =>
+                      handleProjectSummaryKeyDown(event, project.id)
+                    }
+                    className="cursor-pointer rounded-[14px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0f5e4f]/25"
+                  >
+                    <div className="flex items-start justify-between gap-3">
+                      <div className="min-w-0">
+                        {project.link !== "#" ? (
+                          <a
+                            href={project.link}
+                            target="_blank"
+                            rel="noreferrer"
+                            onClick={(event) => event.stopPropagation()}
+                            onKeyDown={(event) => event.stopPropagation()}
+                            className="group inline-block"
+                          >
+                            <h3 className="text-[0.98rem] font-semibold tracking-[-0.02em] text-[#1a1916] transition group-hover:text-[#0f5e4f]">
+                              {project.title}
+                            </h3>
+                          </a>
+                        ) : (
+                          <h3 className="text-[0.98rem] font-semibold tracking-[-0.02em] text-[#1a1916]">
                             {project.title}
                           </h3>
-                        </a>
-                      ) : (
-                        <h3 className="text-[0.98rem] font-semibold tracking-[-0.02em] text-[#1a1916]">
-                          {project.title}
-                        </h3>
-                      )}
+                        )}
+                      </div>
 
-                      {project.date && (
-                        <div className="mt-1 text-[11px] leading-[1.2rem] text-[#6d665d]">
-                          <ReactMarkdown
-                            remarkPlugins={[remarkGfm]}
-                            components={projectMetaComponents}
+                      <div className="flex items-center gap-1.5">
+                        {project.link !== "#" && (
+                          <button
+                            type="button"
+                            onClick={(event) => handleOpenProject(event, project.link)}
+                            className="shrink-0 rounded-full border border-[#d8d0c4] px-2 py-0.5 text-[10px] font-medium uppercase tracking-[0.1em] text-[#4d473f] transition hover:border-[#0f5e4f] hover:text-[#0f5e4f]"
                           >
-                            {project.date}
-                          </ReactMarkdown>
-                        </div>
-                      )}
+                            Open
+                          </button>
+                        )}
+                        <span className="shrink-0 rounded-full border border-[#d8d0c4] px-2 py-0.5 text-[10px] font-medium uppercase tracking-[0.1em] text-[#4d473f]">
+                          {project.expanded ? "Hide" : "Details"}
+                        </span>
+                      </div>
                     </div>
 
-                    <button
-                      type="button"
-                      onClick={() => toggleExpand(project.id)}
-                      className="shrink-0 rounded-full border border-[#d8d0c4] px-2 py-0.5 text-[10px] font-medium uppercase tracking-[0.1em] text-[#4d473f] transition hover:border-[#0f5e4f] hover:text-[#0f5e4f]"
-                    >
-                      {project.expanded ? "Hide" : "Details"}
-                    </button>
-                  </div>
+                    {project.date && (
+                      <div className="mt-1 text-[11px] leading-[1.2rem] text-[#6d665d]">
+                        <ReactMarkdown
+                          remarkPlugins={[remarkGfm]}
+                          components={projectMetaComponents}
+                        >
+                          {project.date}
+                        </ReactMarkdown>
+                      </div>
+                    )}
 
-                  <p
-                    className="mt-1.5 text-[12px] leading-[1.3rem] text-[#3f3a34]"
-                    style={
-                      project.expanded
-                        ? undefined
-                        : {
-                            display: "-webkit-box",
-                            WebkitBoxOrient: "vertical",
-                            WebkitLineClamp: 3,
-                            overflow: "hidden",
-                          }
-                    }
-                  >
-                    {project.description}
-                  </p>
+                    <p
+                      className="mt-1.5 text-[12px] leading-[1.3rem] text-[#3f3a34]"
+                      style={
+                        project.expanded
+                          ? undefined
+                          : {
+                              display: "-webkit-box",
+                              WebkitBoxOrient: "vertical",
+                              WebkitLineClamp: 3,
+                              overflow: "hidden",
+                            }
+                      }
+                    >
+                      {project.description}
+                    </p>
+                  </div>
 
                   {project.expanded && (
                     <div className="mt-2.5 space-y-2.5 border-t border-[#e3ddd4] pt-2.5">
