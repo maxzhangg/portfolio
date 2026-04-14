@@ -384,12 +384,12 @@ const ResumePage = () => {
             </div>
 
             <aside
-              className={`min-w-0 rounded-[22px] border border-[#e3ddd4] bg-[#fcfaf7] px-3.5 py-3.5 shadow-[0_16px_40px_-40px_rgba(26,25,22,0.35)] xl:sticky xl:top-3 xl:overflow-y-auto ${
+              className={`min-w-0 rounded-[22px] border border-[#e3ddd4] bg-[#fcfaf7] px-3.5 pb-3.5 pt-0 shadow-[0_16px_40px_-40px_rgba(26,25,22,0.35)] xl:sticky xl:top-3 xl:overflow-y-auto ${
                 isProjectPanelExpanded ? "" : "xl:hidden"
               }`}
               style={{ maxHeight: DESKTOP_PANEL_MAX_HEIGHT }}
             >
-            <div className="sticky top-0 z-10 -mx-3.5 mb-3 border-b border-[#e3ddd4] bg-[#fcfaf7]/95 px-3.5 pb-2.5 pt-0.5 backdrop-blur">
+            <div className="sticky top-0 z-10 -mx-3.5 mb-3 border-b border-[#e3ddd4] bg-[#fcfaf7] px-3.5 pb-2.5 pt-3.5">
               <div className="flex items-end justify-between gap-4">
                 <div>
                   <div className="text-[9px] font-semibold uppercase tracking-[0.16em] text-[#6d665d]">
