@@ -1,18 +1,9 @@
 [
   {
-    "type": "study",
-    "title": "Let's vibe Reactive dApp！ · Learner",
-    "organization": "Let's vibe Reactive dApp！",
-    "description": "TBD",
-    "link": "https://web3career.build/programs/vibe-reactive-dapp#tab=overview",
-    "startDate": "2026-03-09",
-    "endDate": "present"
-  },
-  {
     "type": "work",
-    "title": "QA",
-    "organization": "WEEX",
-    "description": "TBD",
+    "title": "QA Tester",
+    "organization": "WEEX Global",
+    "description": "Tested a data warehouse–driven risk control dashboard for withdrawal analysis, ensuring accuracy of key financial metrics and reports.\nValidated data consistency using advanced SQL (joins, aggregations, window functions) to reconcile dashboard metrics with source tables.\nLeveraged AI-assisted tools (Codex) to develop Playwright automation scripts, improving test efficiency and coverage.\nDesigned edge-case and dirty data scenarios, and identified and reported **26** defects through debugging and cross-team collaboration.",
     "link": "https://www.weex.com/",
     "startDate": "2026-03-09",
     "endDate": "present"
