@@ -2,211 +2,373 @@ import React, { useEffect, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
+const PROFILE_LINKS = [
+  { href: "https://github.com/maxzhangg", label: "GitHub" },
+  { href: "https://www.linkedin.com/in/maxzhang0/", label: "LinkedIn" },
+];
+
 const ResumePage = () => {
   const [content, setContent] = useState("");
+  const [projectList, setProjectList] = useState([]);
 
   useEffect(() => {
     fetch(`${import.meta.env.BASE_URL}resume.md`)
       .then((res) => res.text())
-      .then((text) => setContent(text));
+      .then((text) => setContent(text))
+      .catch(() => setContent(""));
   }, []);
 
   const sections = content.split("## Projects");
   const mainInfo = sections[0] || "";
   const projects = sections[1] || "";
 
-  const markdownComponents = {
+  const mainMarkdownComponents = {
     h2: ({ node, ...props }) => (
-      <h2 className="text-xl font-bold text-gray-900 mt-6 mb-1 pb-0 border-b border-gray-300 tracking-wide" {...props} />
+      <h2
+        className="mb-3 mt-7 border-b border-[#e5ddd2] pb-2 text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-[#6d665d] first:mt-0"
+        {...props}
+      />
     ),
     h3: ({ node, ...props }) => (
-      <h3 className="text-base font-semibold text-gray-800 mt-0 mb-1" {...props} />
+      <h3
+        className="mb-1 mt-4 text-[1rem] font-semibold leading-[1.35rem] tracking-[-0.02em] text-[#1d1b17]"
+        {...props}
+      />
     ),
     h4: ({ node, ...props }) => (
-      <h4 className="text-sm font-medium text-gray-700 mt-2 mb-1" {...props} />
+      <h4
+        className="mb-1 mt-3 text-[0.86rem] font-medium text-[#2f2a24]"
+        {...props}
+      />
     ),
     p: ({ node, ...props }) => (
-      <p className="mb-0" {...props} />
+      <p
+        className="mb-2.5 text-[13px] leading-[1.55rem] text-[#433d36] last:mb-0"
+        {...props}
+      />
     ),
     a: ({ node, ...props }) => (
-      <a className="text underline hover:text-blue-800 transition-colors duration-150" {...props} />
+      <a
+        target="_blank"
+        rel="noreferrer"
+        className="underline decoration-[#cfc5b8] underline-offset-4 transition hover:text-[#0f5e4f]"
+        {...props}
+      />
     ),
     ul: ({ node, ...props }) => (
-      <ul className="list-disc pl-5 space-y-1" {...props} />
+      <ul
+        className="mb-2.5 list-disc space-y-1.5 pl-4 text-[13px] leading-[1.5rem] text-[#433d36]"
+        {...props}
+      />
     ),
-    li: ({ node, ...props }) => (
-      <li className="mb-0" {...props} />
+    li: ({ node, ...props }) => <li className="pl-1" {...props} />,
+    strong: ({ node, ...props }) => (
+      <strong className="font-semibold text-[#1d1b17]" {...props} />
+    ),
+    em: ({ node, ...props }) => (
+      <em className="italic text-[#6d665d]" {...props} />
+    ),
+    hr: () => <div className="my-5 border-t border-[#e5ddd2]" />,
+  };
+
+  const projectMetaComponents = {
+    p: ({ node, ...props }) => <span {...props} />,
+    a: ({ node, ...props }) => (
+      <a
+        target="_blank"
+        rel="noreferrer"
+        className="underline decoration-[#d3c9bd] underline-offset-4 transition hover:text-[#0f5e4f]"
+        {...props}
+      />
     ),
   };
 
-
-  const [projectList, setProjectList] = useState([]);
-  const [expandedAll, setExpandedAll] = useState(false);
+  const detailMarkdownComponents = {
+    p: ({ node, ...props }) => (
+      <p
+        className="mb-2 text-[12px] leading-[1.45rem] text-[#4d473f] last:mb-0"
+        {...props}
+      />
+    ),
+    ul: ({ node, ...props }) => (
+      <ul
+        className="list-disc space-y-1.5 pl-4 text-[12px] leading-[1.45rem] text-[#4d473f]"
+        {...props}
+      />
+    ),
+    li: ({ node, ...props }) => <li className="pl-1" {...props} />,
+    strong: ({ node, ...props }) => (
+      <strong className="font-semibold text-[#1d1b17]" {...props} />
+    ),
+    a: ({ node, ...props }) => (
+      <a
+        target="_blank"
+        rel="noreferrer"
+        className="underline decoration-[#d3c9bd] underline-offset-4 transition hover:text-[#0f5e4f]"
+        {...props}
+      />
+    ),
+  };
 
   useEffect(() => {
-    if (projects) {
-      const rawItems = projects.split(/^### /gm).filter((block) => block.trim());
-      const parsedProjects = rawItems.map((block, index) => {
-        const lines = block.trim().split("\n");
-        const titleLine = lines[0];
-        const titleMatch = titleLine.match(/\[([^\]]+)\]\(([^)]+)\)/);
-        const title = titleMatch ? titleMatch[1] : titleLine.trim();
-        const link = titleMatch ? titleMatch[2] : "#";
-        const dateLine = lines.find((l) => l.toLowerCase().startsWith("**date:**"));
-        const descriptionLine = lines.find((l) => l.toLowerCase().startsWith("**description:**"));
-        const date = dateLine ? dateLine.replace(/\*\*Date:\*\*\s*/, "").trim() : "";
-        const description = descriptionLine ? descriptionLine.replace(/\*\*Description:\*\*\s*/, "").trim() : "";
-        const imagesLine = lines.find((l) =>
-          l.toLowerCase().startsWith("**images:**")
-          );
-
-        const images = imagesLine
-          ? imagesLine
-          .replace(/\*\*Images:\*\*\s*/i, "")
-          .split(",")
-          .map((s) => s.trim())
-          .filter(Boolean)
-          : [];
-
-        const contribIndex = lines.findIndex((l) => l.toLowerCase().startsWith("**key contributions:**"));
-        let contributions = "";
-        if (contribIndex !== -1) {
-          contributions = lines.slice(contribIndex + 1).join("\n").trim();
-        }
-        return {
-          id: index,
-          title,
-          link,
-          date,
-          description,
-          contributions,
-          images,
-          expanded: false,
-        };
-      });
-      setProjectList(parsedProjects);
+    if (!projects) {
+      setProjectList([]);
+      return;
     }
+
+    const rawItems = projects
+      .split(/^### /gm)
+      .filter((block) => block.trim());
+
+    const parsedProjects = rawItems.map((block, index) => {
+      const lines = block.trim().split("\n");
+      const titleLine = lines[0];
+      const titleMatch = titleLine.match(/\[([^\]]+)\]\(([^)]+)\)/);
+      const title = titleMatch ? titleMatch[1] : titleLine.trim();
+      const link = titleMatch ? titleMatch[2] : "#";
+      const dateLine = lines.find((line) =>
+        line.toLowerCase().startsWith("**date:**")
+      );
+      const descriptionLine = lines.find((line) =>
+        line.toLowerCase().startsWith("**description:**")
+      );
+      const imagesLine = lines.find((line) =>
+        line.toLowerCase().startsWith("**images:**")
+      );
+      const contribIndex = lines.findIndex((line) =>
+        line.toLowerCase().startsWith("**key contributions:**")
+      );
+
+      const date = dateLine
+        ? dateLine.replace(/\*\*date:\*\*\s*/i, "").trim()
+        : "";
+      const description = descriptionLine
+        ? descriptionLine.replace(/\*\*description:\*\*\s*/i, "").trim()
+        : "";
+      const images = imagesLine
+        ? imagesLine
+            .replace(/\*\*images:\*\*\s*/i, "")
+            .split(",")
+            .map((item) => item.trim())
+            .filter(Boolean)
+        : [];
+
+      return {
+        id: index,
+        title,
+        link,
+        date,
+        description,
+        contributions:
+          contribIndex === -1 ? "" : lines.slice(contribIndex + 1).join("\n").trim(),
+        images,
+        expanded: false,
+      };
+    });
+
+    setProjectList(parsedProjects);
   }, [projects]);
 
+  const allExpanded =
+    projectList.length > 0 && projectList.every((project) => project.expanded);
+
   const toggleExpand = (id) => {
-    setProjectList((prev) => prev.map((p) => (p.id === id ? { ...p, expanded: !p.expanded } : p)));
+    setProjectList((prev) =>
+      prev.map((project) =>
+        project.id === id
+          ? { ...project, expanded: !project.expanded }
+          : project
+      )
+    );
   };
 
   const toggleAll = () => {
-    const shouldExpand = !expandedAll;
-    setProjectList((prev) => prev.map((p) => ({ ...p, expanded: shouldExpand })));
-    setExpandedAll(shouldExpand);
+    const shouldExpand = !allExpanded;
+    setProjectList((prev) =>
+      prev.map((project) => ({ ...project, expanded: shouldExpand }))
+    );
   };
 
   return (
-    <div className="max-w-3xl mx-auto px-2 pt-6 pb-6 space-y-8">
-      {/* 头像与基本信息 */}
-      <div className="flex flex-col items-center text-center space-y-2">
-        <img
-          src={`${import.meta.env.BASE_URL}head_resume.png`}
-          alt="Max Zhang"
-          className="rounded-full w-32 h-32 object-cover shadow"
-        />
-        <div className="text-xl font-medium">Max Zhang</div>
-        <div className="text-gray-600 text-sm">she/her</div>
-        <div className="text-xs italic text-gray-700">Electrical & Computer Engineering</div>
-        <div className="space-y-0.5 text-xs text-gray-800">
-          <div className="flex items-center justify-center gap-1">
-            <span role="img" aria-label="email">📧</span>
-            <span>maxzhangggg@gmail.com</span>
-          </div>
-          <div className="flex items-center justify-center gap-2 flex-wrap">
-            <span role="img" aria-label="web">🌐</span>
-            <a href="https://github.com/maxzhangg" target="_blank" className="text-blue-600 hover:underline">GitHub</a>
-            <span>|</span>
-            <a href="https://www.linkedin.com/in/maxzhang0/" target="_blank" className="text-blue-600 hover:underline">LinkedIn</a>
-          </div>
-        </div>
-      </div>
+    <div
+      className="min-h-screen bg-[#f6f3ef] text-[#1d1b17]"
+      style={{ fontFamily: "Sora, 'Noto Sans SC', system-ui, sans-serif" }}
+    >
+      <style>{`
+        @import url("https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&display=swap");
+      `}</style>
 
-      {/* 简历正文 */}
-      <div className="text-sm leading-snug space-y-2">
-        <ReactMarkdown components={markdownComponents}>{mainInfo}</ReactMarkdown>
-      </div>
-
-      {/* 项目区域 */}
-      <div className="space-y-2">
-        <div className="flex justify-between items-center">
-          <h2 className="text-lg font-bold">Projects</h2>
-          <button onClick={toggleAll} className="text-xs text-blue-600 hover:underline">
-            {expandedAll ? "hide all" : "show all"}
-          </button>
-        </div>
-
-        {projectList.map((proj) => (
-          <div
-            key={proj.id}
-            className="border border-gray-200 rounded p-2 shadow-sm hover:shadow transition cursor-pointer"
-            onClick={() => toggleExpand(proj.id)}
-          >
-            {proj.link !== "#" ? (
-              <a href={proj.link} target="_blank" rel="noopener noreferrer" className="text-gray-800 underline hover:text-blue-700">
-                <h3 className="text-base font-semibold">{proj.title}</h3>
-              </a>
-            ) : (
-              <h3 className="text-base font-semibold text-gray-800">{proj.title}</h3>
-            )}
-
-            <p className="text-xs text-gray-500 mb-1">
-              <ReactMarkdown
-                remarkPlugins={[remarkGfm]}
-                components={{
-                  p: ({ node, ...props }) => <span {...props} />,
-                  a: ({ node, ...props }) => (
-                    <a
-                      className="text-gray-500 underline hover:text-blue-700"
-                      {...props}
-                    />
-                  ),
-                }}
-              >
-                {proj.date}
-              </ReactMarkdown>
-            </p>
-            <p className="text-sm mb-1">{proj.description}</p>
-
-            {proj.expanded && (
-  <div className="mt-1 pt-2 border-t text-xs text-gray-700 space-y-3">
-    {/* Contributions 先 */}
-    <ReactMarkdown remarkPlugins={[remarkGfm]}>
-      {proj.contributions}
-    </ReactMarkdown>
-
-    {/* Gallery 最后：竖向满宽展示，不裁切 */}
-    {Array.isArray(proj.images) && proj.images.length > 0 && (
-      <div className="pt-2 border-t space-y-3">
-        {proj.images.map((img, idx) => {
-          const src = `${import.meta.env.BASE_URL}${img}`;
-          return (
-            <a
-              key={`${proj.id}-${idx}`}
-              href={src}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={(e) => e.stopPropagation()}
-              className="block w-full"
-            >
+      <div className="mx-auto max-w-3xl px-3 pb-8 pt-4 sm:px-4">
+        <div className="space-y-5">
+          <section className="rounded-[28px] border border-[#e3ddd4] bg-[linear-gradient(180deg,#fffdf9_0%,#f7f1e8_100%)] px-4 py-5 shadow-[0_18px_44px_-40px_rgba(26,25,22,0.45)]">
+            <div className="flex flex-col items-center text-center space-y-3">
               <img
-                src={src}
-                alt={`${proj.title} ${idx + 1}`}
-                className="w-full h-auto object-contain rounded-md border bg-white"
-                loading="lazy"
+                src={`${import.meta.env.BASE_URL}head_resume.png`}
+                alt="Max Zhang"
+                className="h-28 w-28 rounded-full border-4 border-white object-cover shadow-[0_18px_34px_-24px_rgba(0,0,0,0.42)]"
               />
-            </a>
-          );
-        })}
-      </div>
-    )}
-  </div>
-)}
 
-          </div>
-        ))}
+              <div className="space-y-1">
+                <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#6d665d]">
+                  Resume
+                </div>
+                <div className="text-[1.38rem] font-semibold tracking-[-0.04em] text-[#1d1b17]">
+                  Max Zhang
+                </div>
+                <div className="text-[0.82rem] text-[#6d665d]">she/her</div>
+                <div className="mx-auto max-w-[15rem] text-[0.83rem] leading-[1.3rem] italic text-[#4d473f]">
+                  Electrical & Computer Engineering
+                </div>
+              </div>
+
+              <div className="w-full max-w-[18rem] space-y-2 border-t border-[#e8e0d4] pt-3">
+                <a
+                  href="mailto:maxzhangggg@gmail.com"
+                  className="inline-flex w-full items-center justify-center rounded-full border border-[#ddd3c6] bg-white/85 px-3 py-2 text-[12px] text-[#1d1b17] shadow-[0_12px_20px_-18px_rgba(26,25,22,0.4)] transition hover:border-[#0f5e4f] hover:text-[#0f5e4f]"
+                >
+                  maxzhangggg@gmail.com
+                </a>
+
+                <div className="flex flex-wrap items-center justify-center gap-2">
+                  {PROFILE_LINKS.map((item) => (
+                    <a
+                      key={item.label}
+                      href={item.href}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex rounded-full border border-[#ddd3c6] bg-white/85 px-3 py-1.5 text-[11px] font-medium text-[#2f2a24] shadow-[0_12px_20px_-18px_rgba(26,25,22,0.4)] transition hover:border-[#0f5e4f] hover:text-[#0f5e4f]"
+                    >
+                      {item.label}
+                    </a>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section className="rounded-[26px] border border-[#e3ddd4] bg-white px-4 py-4 shadow-[0_16px_40px_-38px_rgba(26,25,22,0.38)]">
+            <ReactMarkdown
+              remarkPlugins={[remarkGfm]}
+              components={mainMarkdownComponents}
+            >
+              {mainInfo.trim()}
+            </ReactMarkdown>
+          </section>
+
+          <section className="rounded-[26px] border border-[#e3ddd4] bg-[#fcfaf7] px-4 py-4 shadow-[0_16px_40px_-38px_rgba(26,25,22,0.35)]">
+            <div className="mb-3 flex items-end justify-between gap-3 border-b border-[#e5ddd2] pb-2.5">
+              <div>
+                <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#6d665d]">
+                  Portfolio
+                </div>
+                <h2 className="mt-1 text-[1.05rem] font-semibold tracking-[-0.03em] text-[#1d1b17]">
+                  Projects
+                </h2>
+              </div>
+
+              <button
+                type="button"
+                onClick={toggleAll}
+                className="rounded-full border border-[#d9cfbf] px-2.5 py-1 text-[10px] font-medium uppercase tracking-[0.12em] text-[#4d473f] transition hover:border-[#0f5e4f] hover:text-[#0f5e4f]"
+              >
+                {allExpanded ? "Hide all" : "Show all"}
+              </button>
+            </div>
+
+            <div className="space-y-3">
+              {projectList.map((project) => (
+                <article
+                  key={project.id}
+                  className="overflow-hidden rounded-[20px] border border-[#e4dbcf] bg-white shadow-[0_14px_30px_-28px_rgba(26,25,22,0.35)] transition active:scale-[0.995]"
+                  onClick={() => toggleExpand(project.id)}
+                >
+                  <div className="px-3.5 py-3">
+                    <div className="flex items-start justify-between gap-3">
+                      <div className="min-w-0">
+                        {project.link !== "#" ? (
+                          <a
+                            href={project.link}
+                            target="_blank"
+                            rel="noreferrer"
+                            onClick={(event) => event.stopPropagation()}
+                            className="group inline-block"
+                          >
+                            <h3 className="text-[0.98rem] font-semibold leading-[1.35rem] tracking-[-0.02em] text-[#1d1b17] transition group-hover:text-[#0f5e4f]">
+                              {project.title}
+                            </h3>
+                          </a>
+                        ) : (
+                          <h3 className="text-[0.98rem] font-semibold leading-[1.35rem] tracking-[-0.02em] text-[#1d1b17]">
+                            {project.title}
+                          </h3>
+                        )}
+
+                        {project.date && (
+                          <p className="mt-1 text-[11px] leading-[1.25rem] text-[#756d63]">
+                            <ReactMarkdown
+                              remarkPlugins={[remarkGfm]}
+                              components={projectMetaComponents}
+                            >
+                              {project.date}
+                            </ReactMarkdown>
+                          </p>
+                        )}
+                      </div>
+
+                      <span className="shrink-0 rounded-full border border-[#ddd3c6] px-2 py-0.5 text-[10px] font-medium uppercase tracking-[0.1em] text-[#4d473f]">
+                        {project.expanded ? "Hide" : "Details"}
+                      </span>
+                    </div>
+
+                    <p className="mt-2 text-[12.5px] leading-[1.45rem] text-[#433d36]">
+                      {project.description}
+                    </p>
+                  </div>
+
+                  {project.expanded && (
+                    <div className="border-t border-[#ece4d8] bg-[#fcfaf8] px-3.5 py-3">
+                      <div className="space-y-3">
+                        <ReactMarkdown
+                          remarkPlugins={[remarkGfm]}
+                          components={detailMarkdownComponents}
+                        >
+                          {project.contributions}
+                        </ReactMarkdown>
+
+                        {Array.isArray(project.images) &&
+                          project.images.length > 0 && (
+                            <div className="space-y-3 border-t border-[#ece4d8] pt-3">
+                              {project.images.map((image, index) => {
+                                const src = `${import.meta.env.BASE_URL}${image}`;
+
+                                return (
+                                  <a
+                                    key={`${project.id}-${index}`}
+                                    href={src}
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    onClick={(event) => event.stopPropagation()}
+                                    className="block overflow-hidden rounded-[16px] border border-[#e4dbcf] bg-white shadow-[0_12px_24px_-22px_rgba(26,25,22,0.3)]"
+                                  >
+                                    <img
+                                      src={src}
+                                      alt={`${project.title} ${index + 1}`}
+                                      className="h-auto w-full object-contain"
+                                      loading="lazy"
+                                    />
+                                  </a>
+                                );
+                              })}
+                            </div>
+                          )}
+                      </div>
+                    </div>
+                  )}
+                </article>
+              ))}
+            </div>
+          </section>
+        </div>
       </div>
     </div>
   );
