@@ -14,12 +14,12 @@ Northeast Electric Power University, 2019–2023 | GPA: 87.2/100
 **QA Tester**, Weex Global, Remote  
 *Mar 2026 – Present*
 
-– Owned end-to-end quality testing for a production web dashboard, covering UI workflows, data correctness, edge cases, regression risks, and release readiness.
-– Designed and executed test strategies covering manual and automated testing, including UI workflows, data validation, and edge cases
-– Developed Playwright-based automation (Python) to simulate user actions (filter, search, export) and enable automated UI testing and data extraction
-– Built data reconciliation workflows by comparing exported UI data with backend SQL queries, ensuring cross-source consistency
-– Performed root cause analysis on data discrepancies (e.g., 100.65 USDT mismatch) by tracing transaction-level logic and validating risk processing
-– Identified **40+** defects, reported risks early, and collaborated with product and engineering in a fast-paced Agile environment
+- Owned end-to-end quality testing for a production web dashboard, covering UI workflows, data correctness, edge cases, regression risks, and release readiness.
+- Designed and executed test strategies covering manual and automated testing, including UI workflows, data validation, and edge cases
+- Developed Playwright-based automation (Python) to simulate user actions (filter, search, export) and enable automated UI testing and data extraction
+- Built data reconciliation workflows by comparing exported UI data with backend SQL queries, ensuring cross-source consistency
+- Performed root cause analysis on data discrepancies (e.g., 100.65 USDT mismatch) by tracing transaction-level logic and validating risk processing
+- Identified **40+** defects, reported risks early, and collaborated with product and engineering in a fast-paced Agile environment
 
 **Service Router Test Platform Dev Student**, Nokia, Ottawa  
 *Apr 2024 – Dec 2024*
