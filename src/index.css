@@ -1,3 +1,112 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  --studio-ink: #111111;
+  --studio-muted: #56514a;
+  --studio-faint: #f7f7f4;
+  --studio-line: #dedbd4;
+  --studio-accent: #0f5e4f;
+  --studio-web3: #72f0d1;
+}
+
+html {
+  background: #ffffff;
+}
+
+body {
+  margin: 0;
+  background: #ffffff;
+  color: var(--studio-ink);
+  font-family: "Inter", "Noto Sans SC", system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", sans-serif;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button {
+  font: inherit;
+}
+
+::selection {
+  background: rgba(15, 94, 79, 0.18);
+}
+
+.font-serif {
+  font-family: "Instrument Serif", Georgia, serif;
+}
+
+.studio-label {
+  color: #66615b;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.studio-button,
+.studio-button-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.75rem;
+  border: 1px solid var(--studio-ink);
+  padding: 0.72rem 1.05rem;
+  font-size: 0.875rem;
+  font-weight: 700;
+  line-height: 1;
+  transition: background-color 180ms ease, border-color 180ms ease, color 180ms ease,
+    transform 180ms ease;
+}
+
+.studio-button {
+  background: var(--studio-ink);
+  color: #ffffff;
+}
+
+.studio-button:hover {
+  background: var(--studio-accent);
+  border-color: var(--studio-accent);
+  transform: translateY(-1px);
+}
+
+.studio-button-secondary {
+  background: transparent;
+  color: var(--studio-ink);
+}
+
+.studio-button-secondary:hover {
+  border-color: var(--studio-accent);
+  color: var(--studio-accent);
+  transform: translateY(-1px);
+}
+
+.studio-text-link {
+  color: var(--studio-ink);
+  font-size: 0.875rem;
+  font-weight: 700;
+  text-decoration: underline;
+  text-decoration-color: rgba(15, 94, 79, 0.32);
+  text-underline-offset: 0.32rem;
+  transition: color 180ms ease, text-decoration-color 180ms ease;
+}
+
+.studio-text-link:hover {
+  color: var(--studio-accent);
+  text-decoration-color: var(--studio-accent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.001ms !important;
+  }
+}

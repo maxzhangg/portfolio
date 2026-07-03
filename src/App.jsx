@@ -1,15 +1,18 @@
-﻿import React from "react";
-import { HashRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import React from "react";
+import { HashRouter as Router, Navigate, Route, Routes } from "react-router-dom";
+import HomePage from "./pages/HomePage";
+import PhotographerPage from "./pages/PhotographerPage";
+import ProductWorkPage from "./pages/ProductWorkPage";
 import ResumePage from "./pages/ResumePage";
 import Web3Page from "./pages/Web3Page";
-import PhotographerPage from "./pages/PhotographerPage";
-import HomePage from "./pages/HomePage";
 
 const App = () => {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<HomePage />} />
+        <Route path="/work" element={<ProductWorkPage />} />
+        <Route path="/profile" element={<ResumePage />} />
         <Route path="/resume" element={<ResumePage />} />
         <Route path="/web3" element={<Web3Page />} />
         <Route path="/web3/:section" element={<Web3Page />} />
