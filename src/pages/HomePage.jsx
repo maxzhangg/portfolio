@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { ContactButton } from "../components/ContactDialog";
 import SiteNav from "../components/SiteNav";
 import { productProjects, productStrengths } from "../data/productWork";
 import { usePageReveal } from "../utils/usePageReveal";
@@ -204,12 +205,9 @@ const HomePage = () => {
               <Link to="/web3" className="text-white/62 transition hover:text-[#72f0d1]">
                 Web3 Lab
               </Link>
-              <a
-                href="mailto:maxzhangggg@gmail.com"
-                className="text-white/62 transition hover:text-white"
-              >
+              <ContactButton className="text-white/62 transition hover:text-white">
                 maxzhangggg@gmail.com
-              </a>
+              </ContactButton>
             </div>
           </div>
         </footer>

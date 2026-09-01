@@ -1,10 +1,10 @@
 import React from "react";
+import { ContactButton } from "../components/ContactDialog";
 import SiteNav from "../components/SiteNav";
 import { productProjects } from "../data/productWork";
 import { usePageReveal } from "../utils/usePageReveal";
 
 const profileLinks = [
-  { href: "mailto:maxzhangggg@gmail.com", label: "Email" },
   { href: "https://github.com/maxzhangg", label: "GitHub" },
   { href: "https://www.linkedin.com/in/maxzhang0/", label: "LinkedIn" },
 ];
@@ -102,6 +102,9 @@ const ResumePage = () => {
               </p>
             </div>
             <div className="mt-6 grid gap-2 border-y border-[#dedbd4] py-4">
+              <ContactButton className="studio-text-link w-fit">
+                Email
+              </ContactButton>
               {profileLinks.map((item) => (
                 <a key={item.label} href={item.href} className="studio-text-link">
                   {item.label}

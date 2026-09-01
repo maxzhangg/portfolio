@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { ContactButton } from "../components/ContactDialog";
 import SiteNav from "../components/SiteNav";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
@@ -215,7 +216,7 @@ const PhotographerPage = () => {
               <p className="font-serif text-5xl leading-[0.95] sm:text-7xl">A small practice<br />of staying.</p>
               <p className="mt-10 max-w-xl text-lg leading-8 text-[#403c36]">I photograph the suspended moment: a face turning toward light, a room becoming quiet, the thin distance between performing and being seen.</p>
             </div>
-            <a href="mailto:maxzhangggg@gmail.com" className="border-t border-[#171713] pt-3 text-sm font-semibold uppercase tracking-[0.12em]">Commission / Conversation ↗</a>
+            <ContactButton className="border-t border-[#171713] pt-3 text-left text-sm font-semibold uppercase tracking-[0.12em]">Commission / Conversation ↗</ContactButton>
           </div>
         </section>
       </main>

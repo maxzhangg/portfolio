@@ -1,5 +1,6 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
+import { ContactButton } from "./ContactDialog";
 
 const links = [
   { to: "/work", label: "Product Work" },
@@ -52,8 +53,7 @@ const SiteNav = ({ tone = "light" }) => {
               {item.label}
             </Link>
           ))}
-          <a
-            href="mailto:maxzhangggg@gmail.com"
+          <ContactButton
             className={`whitespace-nowrap border-l pl-3 transition ${
               isDark
                 ? "border-white/10 text-slate-300 hover:text-white"
@@ -61,7 +61,7 @@ const SiteNav = ({ tone = "light" }) => {
             }`}
           >
             Contact
-          </a>
+          </ContactButton>
         </nav>
       </div>
     </header>

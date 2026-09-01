@@ -106,6 +106,21 @@ button {
   text-decoration-color: var(--studio-accent);
 }
 
+.contact-dialog-enter {
+  animation: contact-dialog-enter 220ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes contact-dialog-enter {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
