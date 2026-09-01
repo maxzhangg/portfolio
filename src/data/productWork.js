@@ -1,5 +1,29 @@
 export const productProjects = [
   {
+    id: "schedulethiscar",
+    title: "Schedule This Car",
+    subtitle: "Full-stack marketplace for urgent automotive service",
+    type: "Production marketplace",
+    year: "2026",
+    link: "https://schedulethiscar.com/",
+    tags: ["Multi-role marketplace", "Workflow reliability", "Cloud delivery"],
+    problem:
+      "Drivers needing same-day or next-day automotive service must contact shops one by one, while shops lack a structured way to review eligible requests and fill open capacity.",
+    decision:
+      "Design one recorded marketplace workflow across customers, repair shops, and administrators: request, eligibility-based matching, competitive offer, secure checkout, confirmation, completion, and payout.",
+    build:
+      "Built responsive customer, shop, and admin portals with React, TypeScript, Vite, and Tailwind CSS, backed by FastAPI and PostgreSQL. Integrated Stripe payments and refunds, Twilio and Gmail notifications, secure short-link sessions, Firebase Hosting, and Google Cloud Run.",
+    quality:
+      "Made reliability visible through role-scoped authentication, idempotent request and payment handling, credential-gated services, auditable status transitions, background lifecycle jobs, and end-to-end workflow validation.",
+    outcome:
+      "A live production marketplace that turns urgent service requests into trackable bookings while giving shops control over services, capacity, offers, and appointment confirmation.",
+    images: [
+      "projects/schedule-this-car/home.png",
+      "projects/schedule-this-car/request.png",
+      "projects/schedule-this-car/partners.png",
+    ],
+  },
+  {
     id: "weorganizer",
     title: "WeOrganizer",
     subtitle: "AI-driven B2B content aggregation platform",
